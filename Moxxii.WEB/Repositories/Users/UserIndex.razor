@@ -1,0 +1,78 @@
+﻿@page "/usuarios"
+
+@inject IRepository repository
+
+<h3>Usuarios</h3>
+@if(Usuarios is null)
+{
+    <p>Cargando... </p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Apellido</th>
+                <th style="width:180px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var country in Usuarios!)
+            {
+                <tr>
+                    <td>
+                        @country.Name
+                    </td>
+                    <td>
+                        @country.LastName
+                    </td>
+                    <td>
+                        <a class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
+                        <button class="btn btn-danger btn-sm"><i class="oi oi-trash" /> Borrar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    public List<Usuario>? Usuarios { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync(int page = 1)
+    {
+        /*if (!string.IsNullOrWhiteSpace(Page))
+        {
+            page = Convert.ToInt32(Page);
+        }
+
+        string url1 = string.Empty;
+        string url2 = string.Empty;
+
+        if (string.IsNullOrEmpty(Filter))
+        {
+            url1 = $"api/countries?page={page}";
+            url2 = $"api/countries/totalPages";
+        }
+        else
+        {
+            url1 = $"api/countries?page={page}&filter={Filter}";
+            url2 = $"api/countries/totalPages?filter={Filter}";
+        }*/
+
+        try
+        {
+            var responseHppt = await repository.Get<List<Usuario>>("/api/usuario");
+            Usuarios = responseHppt.Response!;
+        }
+        catch (Exception ex)
+        {
+            //await sweetAlertService.FireAsync("Error", ex.Message, SweetAlertIcon.Error);
+        }
+    }
+}
