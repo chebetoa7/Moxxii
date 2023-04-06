@@ -16,6 +16,10 @@ namespace Moxxii.Api.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Usuario>().HasIndex(x => x.Id).IsUnique();
+            modelBuilder.Entity<Usuario>().HasIndex(x => x.Email).IsUnique();
+            modelBuilder.Entity<Usuario>().HasIndex(x => x.Password).IsUnique();
+            modelBuilder.Entity<Usuario>().HasIndex(x => x.PhoneNumber).IsUnique();
+
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Moxxii.Shared.Entities
     {
         public int Id { get; set; }
 
+
+        #region DataPersonal
         [DisplayName("Nombre")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(100, ErrorMessage ="El campo {0} no puede tener más de {1} caractéres")]
@@ -21,7 +23,49 @@ namespace Moxxii.Shared.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
         public string LastName { get; set; } = null!;
-        public int OtherName { get; set; }
+
+        [DisplayName("Apellido materno")]
+        public string? OtherLastName { get; set; } 
+
+        [DisplayName("Fecha de cumpleaños")]
+        public string? Birthdate { get; set; } 
         
+
+        [DisplayName("Edad")]
+        public int? DateAge { get; set; }
+
+        [DisplayName("Sexo")]
+        public string? Sex { get; set; }
+
+        [DisplayName("Dirección")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(120, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string Address { get; set; } = null!;
+
+        [DisplayName("Pais")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string Country { get; set; } = null!;
+        #endregion
+        
+        #region ConfigData
+
+        [DisplayName("Telefono")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(10, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string PhoneNumber { get; set; } = null!;
+
+        [DisplayName("Correo Electrónico")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string Email { get; set; } = null!;
+
+        [DisplayName("Contraseña")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(150, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string Password { get; set; } = null!;
+        #endregion
+        
+
     }
 }
