@@ -1,4 +1,7 @@
-﻿namespace Moxxii.mobile
+﻿using Moxxii.mobile.Services;
+using Refit;
+
+namespace Moxxii.mobile
 {
     public partial class MainPage : ContentPage
     {
@@ -7,18 +10,22 @@
         public MainPage()
         {
             InitializeComponent();
+            button_getf2p.Clicked += Button_getf2p_Clicked; 
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void Button_getf2p_Clicked(object sender, EventArgs e)
         {
-            count++;
+            try
+            {
+                var apiClient = RestService.For<IFreeToPlayApi>(BaseFreeToPlayApi.BaseUrl);
+                var listF2P = await apiClient.GetF2PAsync();
+                StacklayoutListF2P.ItemsSource = listF2P;
+            }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            catch (Exception ex)
+            {
+                Console.WriteLine("Oups " + ex.Message);
+            }
         }
     }
 }

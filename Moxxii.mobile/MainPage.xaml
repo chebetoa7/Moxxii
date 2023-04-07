@@ -1,41 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Moxxii.mobile.Models.Response"
              x:Class="Moxxii.mobile.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
+        <StackLayout BackgroundColor="#121212">
             <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+            x:Name="button_getf2p"
+            BackgroundColor="#931F21"
+            CornerRadius="10"
+            Text="GetList"
+            TextColor="#FFFFFF" />
+            <CollectionView
+            x:Name="StacklayoutListF2P"
+            Margin="10"
+            x:DataType="models:UsuarioResponse">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                    HorizontalItemSpacing="10"
+                    Orientation="Vertical"
+                    Span="2"
+                    VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                        Margin="0"
+                        Padding="5"
+                        HasShadow="True">
+                            <Frame.Background>
+                                <LinearGradientBrush>
+                                    <GradientStopCollection>
+                                        <GradientStop Offset="0" Color="#22FFFFFF" />
+                                        <GradientStop Offset="1" Color="#44FFFFFF" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush>
+                            </Frame.Background>
+                            <StackLayout>
+                                <Label Text="{Binding id, StringFormat='Id :{0}'}" TextColor="White" />
+                                <Label Text="{Binding name, StringFormat='Developer :{0}'}" TextColor="White" />
+                                <Label Text="{Binding lastName, StringFormat='Title :{0}'}" TextColor="White" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
 
-        </VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>
