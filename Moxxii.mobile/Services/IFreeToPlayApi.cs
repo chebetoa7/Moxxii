@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Moxxii.mobile.Services
 {
-    internal interface IFreeToPlayApi
+    [Headers( "Authorization: Bearer", "Content-Type: application/json;charset=utf-8")]
+    public interface IFreeToPlayApi
     {
         [Get("/usuario")]
         Task<List<UsuarioResponse>> GetF2PAsync();
