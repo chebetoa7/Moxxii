@@ -1,4 +1,5 @@
-﻿namespace Moxxii.mobile
+﻿using Microsoft.Extensions.Logging;
+namespace Moxxii.mobile
 {
     public static class MauiProgram
     {
@@ -11,7 +12,12 @@
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+                })
+                .UseMauiMaps();
+
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
 
             return builder.Build();
         }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>net6.0-maccatalyst;net7.0-ios;net7.0-android</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
@@ -49,8 +49,51 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\DashboardMainUser\img_main_user.png" />
+	  <None Remove="Resources\Images\DashboardMainUser\solicitar_moto.png" />
+	  <None Remove="Resources\Images\grup_conductor.png" />
+	  <None Remove="Resources\Images\grup_usuario.png" />
+	  <None Remove="Resources\Images\inicia_session_button.png" />
+	  <None Remove="Resources\Images\logincontraste.png" />
+	  <None Remove="Resources\Images\loginsplash.png" />
+	  <None Remove="Resources\Images\ModalSiNo\img_no.png" />
+	  <None Remove="Resources\Images\ModalSiNo\img_si.png" />
+	  <None Remove="Resources\Images\session_user_logeo.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\DashboardMainUser\img_main_user.png" />
+	  <MauiImage Include="Resources\Images\DashboardMainUser\solicitar_moto.png" />
+	  <MauiImage Include="Resources\Images\ModalSiNo\img_no.png" />
+	  <MauiImage Include="Resources\Images\ModalSiNo\img_si.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+	  <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.Graph" Version="5.5.0" />
+	  <PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.59" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="Plugin.Maui.Popup" Version="1.0.5" />
 	  <PackageReference Include="Refit" Version="6.3.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Controls\PopPup\LoadingPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Acount\LoginSessionSelectPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Acount\LoginStartPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Dashboard\UserMainPage\DashboardUserMainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Mapa\mapUser\MapUserPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Moxxii.mobile.Views.Acount.LoginSessionSelectPage"
+             Title="LoginSessionSelectPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#FFF">
+    <ScrollView>
+        <Grid RowDefinitions="3.333*,3.333*,3.333*"
+              ColumnDefinitions="3.333*,3.333*,3.333*"
+              BackgroundColor="Transparent">
+            <StackLayout Grid.Column="0"
+                         Grid.Row="0"
+                         Grid.ColumnSpan="3"
+                         Grid.RowSpan="3"
+                         x:Name="stkSessionMain"
+                         IsVisible="True"
+                         BackgroundColor="Transparent">
+                <Grid RowDefinitions="4.0*,6.0*" 
+                      VerticalOptions="FillAndExpand"
+                      BackgroundColor="Transparent">
+                    <StackLayout Grid.Row="0" x:Name="stkImageLogeo"
+                                 BackgroundColor="#FF746B">
+                        <Image Source="session_user_logeo.png"
+                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="FillAndExpand"
+                               HeightRequest="500"
+                               Margin="0,30,0,0"
+                               >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OkSamuelGayCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" 
+                                 BackgroundColor="Transparent"
+                                 >
+                        <StackLayout Padding="10,130,20,0"
+                                     WidthRequest="290"
+                                     HorizontalOptions="Center">
+                            <Frame BorderColor="Beige"
+                                   Padding="0,5,0,0"
+                               BackgroundColor="#E5E5E5">
+                                <Entry Placeholder="Telefono"
+                                   PlaceholderColor="#616161"
+                                   TextColor="#626262"
+                                   Margin="10,0,0,0" />
+                            </Frame>
+                        </StackLayout>
+
+                        <StackLayout Padding="10,10,20,0"
+                                     WidthRequest="290">
+                            <Frame BorderColor="Beige"
+                                   Padding="0,5,0,0"
+                               BackgroundColor="#E5E5E5">
+                                <Entry Placeholder="Nombre completo"
+                                   PlaceholderColor="#616161"
+                                   TextColor="#626262"
+                                   Margin="10,0,0,0" />
+                            </Frame>
+                        </StackLayout>
+
+                        <StackLayout Padding="10,30,20,0"
+                                     WidthRequest="290"
+                                     BackgroundColor="Transparent">
+                            <Image Source="inicia_session_button.png"
+                                   >
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OkSessionCommand}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </StackLayout>
+
+
+                    </StackLayout>
+
+                </Grid>
+            </StackLayout>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>
