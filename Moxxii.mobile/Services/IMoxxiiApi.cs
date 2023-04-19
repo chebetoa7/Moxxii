@@ -9,9 +9,12 @@ using System.Threading.Tasks;
 namespace Moxxii.mobile.Services
 {
     [Headers( "Authorization: Bearer", "Content-Type: application/json;charset=utf-8")]
-    public interface IFreeToPlayApi
+    public interface IMoxxiiApi
     {
-        [Get("/usuario")]
-        Task<List<UsuarioResponse>> GetF2PAsync();
+        [Get("/Usuario/GetById?id={_id}")]
+        Task<List<UsuarioResponse>> GetUsuario(int _id, [Header("Bearer")] string authorization);
+
+        [Get("/Usuario/Get")]
+        Task<List<UsuarioResponse>> GetUsuarioAll();
     }
 }
