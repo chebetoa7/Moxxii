@@ -22,6 +22,7 @@ namespace Moxxii.Api.Controllers
     [ApiController]
     public class UsuarioControllers : ControllerBase
     {
+        
         private DataContext _context;
         private static DataContext _contextStatic;
         private Task<dynamic> rtokent;
@@ -34,6 +35,8 @@ namespace Moxxii.Api.Controllers
             _contextStatic = context;
             _configuration = configuration;
         }
+
+        
 
         [HttpPost]
         [Route("/api/Usuario/Login")]
@@ -257,5 +260,8 @@ namespace Moxxii.Api.Controllers
             }
 
         }
+
+
+
     }
 }

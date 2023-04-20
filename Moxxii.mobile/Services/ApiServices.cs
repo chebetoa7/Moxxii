@@ -31,7 +31,7 @@ namespace Moxxii.mobile.Services
                 // client.DefaultRequestHeaders.Add("api_key", key);
                 client.BaseAddress = new Uri(urlBase);
                 var url = string.Format("{0}{1}", servicePreFix, controller);
-                var respose = await client.GetAsync("https://localhost:7257/api/Usuario/Get");//"192.168.114.30:44358/api/usuario");
+                var respose = await client.GetAsync("https://moxxiiapi20230419123954.azurewebsites.net/WeatherForecast");//"192.168.114.30:44358/api/usuario");
 
                 if (respose.IsSuccessStatusCode == false)
                 {
