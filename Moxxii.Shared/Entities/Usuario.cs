@@ -10,8 +10,12 @@ namespace Moxxii.Shared.Entities
 {
     public class Usuario
     {
+        #region Identificador
         public int Id { get; set; }
 
+        [DisplayName("Disponibilidad de usuario")]
+        public string Disponibility { get; set; }
+        #endregion
 
         #region DataPersonal
         [DisplayName("Nombre")]
@@ -47,8 +51,24 @@ namespace Moxxii.Shared.Entities
         [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
         public string Country { get; set; } = null!;
         #endregion
-        
+
         #region ConfigData
+        [DisplayName("Tipo de usuario")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string TypeUser {get; set; } = null!;
+
+        [DisplayName("Estado de la tabla")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public bool Status {get; set; }
+
+        [DisplayName("Informacion adicional")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string Metadata { get; set; } = null!;
+        #endregion
+
+        #region AccessData
 
         [DisplayName("Telefono")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
@@ -66,6 +86,5 @@ namespace Moxxii.Shared.Entities
         public string Password { get; set; } = null!;
         #endregion
         
-
     }
 }

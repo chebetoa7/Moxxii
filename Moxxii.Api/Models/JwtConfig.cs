@@ -62,30 +62,6 @@ namespace Moxxii.Api.Models
                     result = usuario
                 };
 
-                /*
-                var dVal = GetIdUserValidDB(id, context);
-                if (dVal.ToString() == "true")
-                {
-                    var usuarioMessage = "Usuario eliminado con Id = " + user_.Id;
-                    //var usuario = _context.Usuarios.Where(w => w.Id.ToString() == id).FirstOrDefault();
-                    return new
-                    {
-                        success = true,
-                        message = usuarioMessage,
-                        result = user_
-                    };
-                }
-                else
-                {
-                    var usuarioMessage = "Usuario no valido = " + user_.Id;
-                    //var usuario = _context.Usuarios.Where(w => w.Id.ToString() == id).FirstOrDefault();
-                    return new
-                    {
-                        success = true,
-                        message = usuarioMessage,
-                        result = user_
-                    };
-                }*/
 
 
             }

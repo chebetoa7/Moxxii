@@ -39,8 +39,8 @@ namespace Moxxii.Api.Controllers
         
 
         [HttpPost]
-        [Route("/api/Usuario/Login")]
-        public async Task<dynamic> IniciaSession([FromBody] Object optData)
+        [Route("/api/Usuario/token")]
+        public async Task<dynamic> IniciaSessionToken([FromBody] Object optData)
         {
             var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
             string user = data.usuario.ToString();
@@ -201,7 +201,7 @@ namespace Moxxii.Api.Controllers
             
         }
 
-        
+        /*
         public static dynamic ValidarTokent(ClaimsIdentity identity)
         { 
             try
@@ -262,6 +262,6 @@ namespace Moxxii.Api.Controllers
         }
 
 
-
+        */
     }
 }
