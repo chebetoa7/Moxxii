@@ -15,6 +15,8 @@ namespace Moxxii.Shared.Entities
 
         [DisplayName("Disponibilidad de usuario")]
         public string Disponibility { get; set; }
+
+        public ICollection<Viaje> Viajes { get; set; }
         #endregion
 
         #region DataPersonal

@@ -58,7 +58,7 @@ namespace Moxxii.Api.Models
                 return new
                 {
                     success = true,
-                    message = "Usuario Eliminado",
+                    message = "Usuario valido",
                     result = usuario
                 };
 

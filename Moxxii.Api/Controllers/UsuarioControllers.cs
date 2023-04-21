@@ -122,14 +122,14 @@ namespace Moxxii.Api.Controllers
                 {
                     success = true,
                     message = "exito",
-                    result = Ok(usu.FirstOrDefault())
+                    result = usu.FirstOrDefault()
                 };
             } catch (Exception ex)
             {
                 return new
                 {
                     success = true,
-                    message = "exito",
+                    message = "Error",
                     result = BadRequest(ex.Message)
                 };
             }
@@ -137,16 +137,26 @@ namespace Moxxii.Api.Controllers
 
         [HttpPost]
         [Route("/api/Usuario/Add")]
-        public async Task<ActionResult> PostUsuario(Usuario usuario)
+        public async Task<dynamic> PostUsuario(Usuario usuario)
         {
             try 
             {
                 _context.Usuarios.Add(usuario);
                 await _context.SaveChangesAsync();
-                return Ok(usuario);
+                return new
+                {
+                    success = true,
+                    message = "exito",
+                    result = usuario
+                };
             } catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return new
+                {
+                    success = true,
+                    message = "Error",
+                    result = BadRequest(ex.Message)
+                };
             }
         }
 

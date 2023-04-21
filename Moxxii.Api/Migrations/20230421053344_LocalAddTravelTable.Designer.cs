@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moxxii.Api.Data;
 
@@ -11,9 +12,11 @@ using Moxxii.Api.Data;
 namespace Moxxii.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230421053344_LocalAddTravelTable")]
+    partial class LocalAddTravelTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,103 +24,6 @@ namespace Moxxii.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Moxxii.Shared.Entities.Promociones", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Descrition")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.Property<double>("PromotionPrice")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("ruta_paradaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("ruta_paradaId");
-
-                    b.ToTable("Promociones");
-                });
-
-            modelBuilder.Entity("Moxxii.Shared.Entities.Rutas_Paradas", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CommentDrive")
-                        .IsRequired()
-                        .HasMaxLength(550)
-                        .HasColumnType("nvarchar(550)");
-
-                    b.Property<string>("CommentPass")
-                        .IsRequired()
-                        .HasMaxLength(550)
-                        .HasColumnType("nvarchar(550)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("LongEnd")
-                        .HasColumnType("float");
-
-                    b.Property<double>("LongInitial")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Metadata")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("StatusTrip")
-                        .HasColumnType("bit");
-
-                    b.Property<double>("TripPrice")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TripPriceMoxxii")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ViajeId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("latEnd")
-                        .HasColumnType("float");
-
-                    b.Property<double>("latInitial")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("ViajeId");
-
-                    b.ToTable("Paradas");
-                });
 
             modelBuilder.Entity("Moxxii.Shared.Entities.Usuario", b =>
                 {
@@ -240,14 +146,16 @@ namespace Moxxii.Api.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("StatusTrip")
                         .HasColumnType("bit");
-
-                    b.Property<double>("TripPriceTotalMoxxii")
-                        .HasColumnType("float");
 
                     b.Property<double>("latEnd")
                         .HasColumnType("float");
@@ -257,10 +165,7 @@ namespace Moxxii.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("Viajes");
+                    b.ToTable("Viaje");
                 });
 
             modelBuilder.Entity("UsuarioViaje", b =>
@@ -278,26 +183,6 @@ namespace Moxxii.Api.Migrations
                     b.ToTable("UsuarioViaje");
                 });
 
-            modelBuilder.Entity("Moxxii.Shared.Entities.Promociones", b =>
-                {
-                    b.HasOne("Moxxii.Shared.Entities.Rutas_Paradas", "ruta_parada")
-                        .WithMany()
-                        .HasForeignKey("ruta_paradaId");
-
-                    b.Navigation("ruta_parada");
-                });
-
-            modelBuilder.Entity("Moxxii.Shared.Entities.Rutas_Paradas", b =>
-                {
-                    b.HasOne("Moxxii.Shared.Entities.Viaje", "Viaje")
-                        .WithMany("rutas_paradas")
-                        .HasForeignKey("ViajeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Viaje");
-                });
-
             modelBuilder.Entity("UsuarioViaje", b =>
                 {
                     b.HasOne("Moxxii.Shared.Entities.Usuario", null)
@@ -311,11 +196,6 @@ namespace Moxxii.Api.Migrations
                         .HasForeignKey("ViajesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Moxxii.Shared.Entities.Viaje", b =>
-                {
-                    b.Navigation("rutas_paradas");
                 });
 #pragma warning restore 612, 618
         }

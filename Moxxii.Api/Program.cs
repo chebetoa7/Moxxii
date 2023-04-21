@@ -31,7 +31,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=AzureStorage"));
+//builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=AzureStorage"));//Azure
+builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=MoxxiConnection"));//Local
 
 
 var app = builder.Build();
