@@ -55,7 +55,7 @@ namespace Moxxii.Api.Controllers
                 {
                     success = false,
                     message = "Credenciales incorrectas",
-                    result = ""
+                    usuario = usuario
                 };
             }
 
@@ -80,11 +80,16 @@ namespace Moxxii.Api.Controllers
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: singIn
                 );
+            var usuaValido = new UsuarioValido 
+            {
+                usuario = usuario,
+                token = new JwtSecurityTokenHandler().WriteToken(tokent)
+            };
             return new
             {
                 success = true,
                 message = "Exito",
-                result = new JwtSecurityTokenHandler().WriteToken(tokent)
+                result = usuaValido
             };
         }
 

@@ -13,6 +13,10 @@ namespace Moxxii.mobile.ViewModels.Dashboard.UserMainPage
         #region Var
         #endregion
 
+        #region Properties
+        
+        #endregion
+
         #region Command
         public ICommand MapCommand { get; set; }
         #endregion
@@ -27,6 +31,7 @@ namespace Moxxii.mobile.ViewModels.Dashboard.UserMainPage
         #region Tap Command
         private async Task TapMapDataCommands()
         {
+            
             await NavigateAsync(new MapUserPage());
         }
         #endregion

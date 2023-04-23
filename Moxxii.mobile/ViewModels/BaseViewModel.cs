@@ -49,6 +49,11 @@ namespace Moxxii.mobile.ViewModels
             //string result = await MauiPopup.PopupAction.DisplayPopup(new LoadingPopup());
             //await .Instance.PushAsync(activityIndicator);
         }
+
+        public async Task DisplayAlertMessage(string title, string message, string cancel)
+        {
+            await Application.Current.MainPage.DisplayAlert(title, message, cancel);
+        }
         #endregion
     }
 }

@@ -1,7 +1,9 @@
-﻿using Moxxii.mobile.Models.Response;
+﻿using Moxxii.mobile.Models.Body;
+using Moxxii.mobile.Models.Response;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,5 +21,8 @@ namespace Moxxii.mobile.Services
 
         [Get("/api/Usuario/Get")]
         Task<List<UsuarioResponse>> GetUsuarioAll();
+
+        [Post("/api/Usuario/token")]
+        Task<ResponseToken> GetTokenUser(loginModel dataLogin);
     }
 }

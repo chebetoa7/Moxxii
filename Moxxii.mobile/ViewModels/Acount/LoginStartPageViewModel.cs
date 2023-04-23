@@ -11,7 +11,7 @@ namespace Moxxii.mobile.ViewModels.Acount
 {
     public partial class LoginStartPageViewModel : BaseViewModel
     {
-        #region Var
+        #region Vars
         [ObservableProperty]
         public bool _isBusy;
 
@@ -62,7 +62,7 @@ namespace Moxxii.mobile.ViewModels.Acount
         {
             try
             {
-                await WaitAndExecute(3800, () =>
+                await WaitAndExecute(2800, () =>
                 {
                     stkk1.BackgroundColor = Color.FromRgba("#FFFFFF");
                     imgg.Source = "loginsplash.png";
@@ -78,7 +78,7 @@ namespace Moxxii.mobile.ViewModels.Acount
         {
             try
             {
-                await WaitAndExecute(2800, () =>
+                await WaitAndExecute(1800, () =>
                 {
                     stkk1.IsVisible = false;
                     stkk2.IsVisible = true;

@@ -6,10 +6,10 @@
     xmlns:views="clr-namespace:Moxxii.mobile.Views.Acount"
     xmlns:viewsMain="clr-namespace:Moxxii.mobile"
     Shell.FlyoutBehavior="Disabled">
-<!--ContentTemplate="{DataTemplate views:LoginStartPage}"-->
+	<!--ContentTemplate="{DataTemplate viewsMain:MainPage}-->
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate viewsMain:MainPage}"
+		ContentTemplate="{DataTemplate views:LoginStartPage}"
         Route="MainPage" />
 
 </Shell>
