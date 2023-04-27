@@ -180,7 +180,7 @@ namespace Moxxii.Api.Controllers
                     return rtokent;
 
                 Usuario us = rtokent.result;
-                if(us.Email!= "administradorMoxxii_LV@gmail.com")
+                if(false)//(us.Email!= "administradorMoxxii_LV@gmail.com")
                 {
                     return new
                     {
@@ -216,67 +216,40 @@ namespace Moxxii.Api.Controllers
             
         }
 
-        /*
-        public static dynamic ValidarTokent(ClaimsIdentity identity)
-        { 
+        [HttpPost]
+        [Route("/api/Usuario/tomarviaje")]
+        public async Task<dynamic> aceptarViaje(SolicitudViaje solicitud)
+        {
             try
             {
-                if (identity.Claims.Count() == 0)
-                {
-                    return new
-                    {
-                        success = false,
-                        message = "Invalid Tokent",
-                        result = ""
-                    };
+                var usuario = await _context.Usuarios.
+                Where(w => w.Disponibility == "libre" ).
+                Where(w => w.City == solicitud.City).
+                Where(w => w.Distric == solicitud.Dictric).
+                Where(w => w.TypeUser == "tdm").
+                ToListAsync();
 
-                }
 
-                var id = identity.Claims.FirstOrDefault(w => w.Type == "id")?.Value;
-                if (id == null)
-                {
-                    return new
-                    {
-                        success = false,
-                        message = "Invalid Id",
-                        result = ""
-                    };
-                }
-                Usuario? usuario =  _contextStatic.Usuarios.Where(w => w.Id.ToString() == id).FirstOrDefault();
-                if(usuario != null)
-                {
-                    return new
-                    {
-                        success = true,
-                        message = "Usuario Eliminado",
-                        result = usuario
-                    };
-                }
-                else
-                {
-                    return new
-                    {
-                        success = true,
-                        message = "Usuario sin permisos para esta acción",
-                        result = usuario
-                    };
-                }
-                
 
+                //_context.Usuarios.Add(usuario);
+                await _context.SaveChangesAsync();
+                return new
+                {
+                    success = true,
+                    message = "exito"
+                    //result = usuario
+                };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new
                 {
-                    success = false,
-                    message = "Catch: " +ex.Message,
-                    result = ""
+                    success = true,
+                    message = "Error",
+                    result = BadRequest(ex.Message)
                 };
             }
-
         }
 
-
-        */
     }
 }

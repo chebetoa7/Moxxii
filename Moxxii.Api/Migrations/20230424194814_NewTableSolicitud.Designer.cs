@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moxxii.Api.Data;
 
@@ -11,9 +12,11 @@ using Moxxii.Api.Data;
 namespace Moxxii.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230424194814_NewTableSolicitud")]
+    partial class NewTableSolicitud
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,10 +135,6 @@ namespace Moxxii.Api.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("ConfirmationStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Dictric")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -147,22 +146,17 @@ namespace Moxxii.Api.Migrations
                     b.Property<int?>("IdPasajero")
                         .HasColumnType("int");
 
-                    b.Property<double?>("latEnd")
+                    b.Property<double>("latEnd")
                         .HasColumnType("float");
 
-                    b.Property<double?>("latInitial")
-                        .IsRequired()
+                    b.Property<double>("latInitial")
                         .HasColumnType("float");
 
-                    b.Property<double?>("longEnd")
+                    b.Property<double>("longEnd")
                         .HasColumnType("float");
 
-                    b.Property<double?>("longInitial")
-                        .IsRequired()
+                    b.Property<double>("longInitial")
                         .HasColumnType("float");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

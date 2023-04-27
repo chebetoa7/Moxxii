@@ -49,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="google-services.json" />
 	  <None Remove="Resources\Images\DashboardMainUser\img_main_user.png" />
 	  <None Remove="Resources\Images\DashboardMainUser\solicitar_moto.png" />
 	  <None Remove="Resources\Images\grup_conductor.png" />
@@ -59,6 +60,10 @@
 	  <None Remove="Resources\Images\ModalSiNo\img_no.png" />
 	  <None Remove="Resources\Images\ModalSiNo\img_si.png" />
 	  <None Remove="Resources\Images\session_user_logeo.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="google-services.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -74,8 +79,15 @@
 	  <PackageReference Include="Microsoft.Graph" Version="5.5.0" />
 	  <PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.59" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="Plugin.Firebase.Analytics" Version="2.0.1" />
+	  <PackageReference Include="Plugin.Firebase.Auth" Version="2.0.1" />
+	  <PackageReference Include="Plugin.Firebase.CloudMessaging" Version="2.0.2" />
+	  <PackageReference Include="Plugin.Firebase.Core" Version="2.0.1" />
+	  <PackageReference Include="Plugin.Firebase.Functions" Version="2.0.1" />
+	  <PackageReference Include="Plugin.LocalNotification" Version="10.1.4" />
 	  <PackageReference Include="Plugin.Maui.Popup" Version="1.0.5" />
 	  <PackageReference Include="Refit" Version="6.3.2" />
+	  <PackageReference Include="Xamarin.Firebase.iOS.Core" Version="8.10.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>

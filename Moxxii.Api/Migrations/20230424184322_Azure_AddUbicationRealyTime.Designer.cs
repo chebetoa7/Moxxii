@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moxxii.Api.Data;
 
@@ -11,9 +12,11 @@ using Moxxii.Api.Data;
 namespace Moxxii.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230424184322_Azure_AddUbicationRealyTime")]
+    partial class Azure_AddUbicationRealyTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,59 +122,6 @@ namespace Moxxii.Api.Migrations
                     b.ToTable("Paradas");
                 });
 
-            modelBuilder.Entity("Moxxii.Shared.Entities.SolicitudViaje", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("ConfirmationStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Dictric")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<int?>("IdConductor")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdPasajero")
-                        .HasColumnType("int");
-
-                    b.Property<double?>("latEnd")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("latInitial")
-                        .IsRequired()
-                        .HasColumnType("float");
-
-                    b.Property<double?>("longEnd")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("longInitial")
-                        .IsRequired()
-                        .HasColumnType("float");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("solicitudViajes");
-                });
-
             modelBuilder.Entity("Moxxii.Shared.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -204,11 +154,6 @@ namespace Moxxii.Api.Migrations
                     b.Property<string>("Disponibility")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Distric")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Email")
                         .IsRequired()

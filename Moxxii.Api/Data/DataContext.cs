@@ -14,6 +14,7 @@ namespace Moxxii.Api.Data
         public DbSet<Viaje> Viajes { get; set; }
         public DbSet<Rutas_Paradas> Paradas { get; set; }
         public DbSet<Promociones> Promociones { get; set; }
+        public DbSet<SolicitudViaje> solicitudViajes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,8 @@ namespace Moxxii.Api.Data
             modelBuilder.Entity<Rutas_Paradas>().HasIndex(x => x.Id).IsUnique();
 
             modelBuilder.Entity<Promociones>().HasIndex(x => x.Id).IsUnique();
+
+            modelBuilder.Entity<SolicitudViaje>().HasIndex(x => x.Id).IsUnique();
 
         }
     }

@@ -25,23 +25,7 @@ public partial class MapUserPage : ContentPage
         BindingContext = _viewModel = new MapViewModel(mapa_);
         //Localitation();
 
-        // Instantiate a Circle
-        /*
-         espera = new ActivityIndicator
-         {
-             VerticalOptions = LayoutOptions.CenterAndExpand,
-             HorizontalOptions = LayoutOptions.CenterAndExpand,
-             BackgroundColor = Color.FromRgba("#FFF"),
-             IsRunning = true,
-             IsVisible = true,
-             WidthRequest = 300,
-             HeightRequest = 200,
-         };
-         */
-        /*stkLoading.Add(espera);
-        stkLoading.IsVisible = true;
-        stkMapa.IsVisible = false;*/
-        // Device.BeginInvokeOnMainThread(async () => await GetLocationAsync());
+        
 
     }
 

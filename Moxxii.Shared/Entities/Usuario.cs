@@ -16,7 +16,7 @@ namespace Moxxii.Shared.Entities
         [DisplayName("Disponibilidad de usuario")]
         public string Disponibility { get; set; }
 
-        public ICollection<Viaje> Viajes { get; set; }
+        public ICollection<Viaje>? Viajes { get; set; } = null;
         #endregion
 
         #region DataPersonal
@@ -52,9 +52,27 @@ namespace Moxxii.Shared.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
         public string Country { get; set; } = null!;
+
+        [DisplayName("Ciudad")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string City { get; set; } = null!;
+
+        [DisplayName("Colonia o distrito")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string Distric { get; set; } = null!;
         #endregion
 
         #region ConfigData
+        [DisplayName("Ubicación en tiempo real lat")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public double UbicationRealLat {get; set; } = 0f;
+
+        [DisplayName("Ubicación en tiempo real lon")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public double UbicationRealLon {get; set; } = 0f;
+
         [DisplayName("Tipo de usuario")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]

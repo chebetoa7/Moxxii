@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "666503359288",
+    "firebase_url": "https://moxii-460dd-default-rtdb.firebaseio.com",
+    "project_id": "moxii-460dd",
+    "storage_bucket": "moxii-460dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666503359288:android:ea4bf96117d6ed903f6fcd",
+        "android_client_info": {
+          "package_name": "com.companyname.moxxii.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5TYYVCrEbFmtD44CbmeyX8Fg8JnkL9Os"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
