@@ -17,6 +17,7 @@ namespace Moxxii.mobile.ViewModels
 
         #region Command
         public ICommand InitializeDataCommand { get; set; }
+        public ICommand ShareUserDataCommand { get; set; }
         protected virtual void InitCommands() { }
         #endregion
 
@@ -53,6 +54,17 @@ namespace Moxxii.mobile.ViewModels
         public async Task DisplayAlertMessage(string title, string message, string cancel)
         {
             await Application.Current.MainPage.DisplayAlert(title, message, cancel);
+        }
+        #endregion
+
+        #region ConductorPopup
+        public async Task IniciaRutaPopup()
+        {
+            await MauiPopup.PopupAction.DisplayPopup(new StarRutePopup());
+        }
+        public async Task TerminaRutaPopup()
+        {
+            await MauiPopup.PopupAction.ClosePopup(new StarRutePopup());
         }
         #endregion
     }

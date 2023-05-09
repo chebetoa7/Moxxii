@@ -162,12 +162,14 @@ namespace Moxxii.Api.Controllers
                     soli.longEnd = solicitud.longEnd;
                     soli.status = false;
 
-                    _context.solicitudViajes.Update(soli);
-                    await _context.SaveChangesAsync();
-
                     apiManager = RestService.For<IMoxxiiApi>(MoxxiiApi.BaseMapsUrl);
                     mapCord = apiManager.GetRoute(soli.latInitial, soli.longInitial, soli.latEnd, soli.longEnd, "AIzaSyC2XudfRAoNIVBkWWwi9Y20obpb00T6jU0");
                     route = mapCord.Result.routes.FirstOrDefault();// routes.FirstOrDefault().legs.FirstOrDefault().distance.ToString();
+
+
+
+                    _context.solicitudViajes.Update(soli);
+                    await _context.SaveChangesAsync();
 
                     return new
                     {

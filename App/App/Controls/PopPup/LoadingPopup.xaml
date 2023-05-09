@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupPage 
+	xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="App.Controls.PopPup.LoadingPopup">
+
+	<StackLayout VerticalOptions="FillAndExpand">
+		<StackLayout BackgroundColor="#98C7C7C7"
+					 VerticalOptions="FillAndExpand"
+				 Orientation="Vertical">
+
+			<ActivityIndicator IsRunning="True"
+							   Margin="0,50,0,0"
+						   Color="#323232"/>
+			<Image Source="salir.png"
+					HorizontalOptions="EndAndExpand"
+					Margin="1,120,-150,1"
+					BackgroundColor="Transparent"
+					WidthRequest="450"/>
+			<Image Source="modal_asignado_moto.png"
+				   Margin="0,-15,0,0"
+					   WidthRequest="250"/>
+		</StackLayout>
+	</StackLayout>
+	
+</popup:PopupPage>

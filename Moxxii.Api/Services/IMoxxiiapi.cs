@@ -8,7 +8,7 @@ namespace Moxxii.Api.Services
     {
        
 
-        [Get("/api/directions/json?origin={originLat},{originLon}&destination={deslat},{desLong}&key={key}")]
+        [Get("/api/directions/json?origin={latInitial},{longInitial}&destination={latEnd},{lonEnd}&key={key}")]
         Task<RouteMaps> GetRoute(double? latInitial, double? longInitial, double? latEnd, double? lonEnd, string key);
 
         [Get("/api/distancematrix/json?origin={originLat},{originLon}&destination={deslat},{desLong}&key={key}")]

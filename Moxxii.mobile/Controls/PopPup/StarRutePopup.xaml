@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mauiPopup:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Moxxii.mobile.Controls.PopPup.StarRutePopup"
+			 xmlns:mauiPopup="clr-namespace:MauiPopup.Views;assembly=MauiPopup"
+             Title="StarRutePopup"
+		     BackgroundColor="Transparent">
+    <VerticalStackLayout >
+		<Image Source="iniciarjornada.png"
+			   
+			   BackgroundColor="#78797A">
+			
+		</Image>
+    </VerticalStackLayout>
+</mauiPopup:BasePopupPage>

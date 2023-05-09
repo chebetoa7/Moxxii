@@ -26,6 +26,7 @@ namespace Moxxii.mobile.ViewModels.Acount
 
         #region Command
         public ICommand OpenUserCommand { get; set; }
+        public ICommand OpenConductorCommand { get; }
         #endregion
 
         #region Constructor 
@@ -46,13 +47,32 @@ namespace Moxxii.mobile.ViewModels.Acount
             _ = StarPrecentationOne();
 
             OpenUserCommand = new Command(async () => await TapUserInitialDataCommands());
+            OpenConductorCommand = new Command(async () => await TapConductorDataCommands());
         }
         #endregion
 
         #region Tap Command
         private async Task TapUserInitialDataCommands()
         {
-            await NavigateAsync(new LoginSessionSelectPage());
+            try
+            {
+                await NavigateAsync(new LoginSessionSelectPage());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error " + ex.Message);
+            }
+        }
+        private async Task TapConductorDataCommands()
+        {
+            try
+            {
+                await NavigateAsync(new LoginConductorSelectPage());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error " + ex.Message);
+            }
         }
         #endregion
 

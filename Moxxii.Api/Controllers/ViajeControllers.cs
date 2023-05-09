@@ -27,24 +27,30 @@ namespace Moxxii.Api.Controllers
 
         [HttpPost]
         [Route("/api/viaje/solicitudNuevoViaje")]
-        public async Task<dynamic> NuevoViaje([FromBody] Object optData) 
+        public async Task<dynamic> NuevoViaje(Viaje viaje) 
         {
             
             try
             {
-                var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
-
-                if (data == null)
+                _context.Viajes.Add(viaje);
+                await _context.SaveChangesAsync();
+                return new
                 {
-                    return null;
-                }
-                Usuario usuarioAsignado = AsignaUsuario(data);
+                    success = true,
+                    message = "exito",
+                    Result = Ok()
+                };
             }
             catch (Exception ex) 
             {
-
+                Console.WriteLine($"{ex.Message}");
+                return new
+                {
+                    success = false,
+                    message = "error: " + ex.Message,
+                    Result = BadRequest(ex)
+                };
             }
-            throw new NotImplementedException();
         }
 
         private async Task<Usuario> AsignaUsuario(dynamic data)

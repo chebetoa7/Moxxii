@@ -1,4 +1,7 @@
-﻿using Moxxii.mobile.Models.Body;
+﻿using FirebaseAdmin;
+using FirebaseAdmin.Messaging;
+using Google.Apis.Auth.OAuth2;
+using Moxxii.mobile.Models.Body;
 using Moxxii.mobile.Models.Response;
 using Moxxii.mobile.Services;
 using Moxxii.mobile.Services.Login;
@@ -17,7 +20,43 @@ namespace Moxxii.mobile
         public MainPage()
         {
             InitializeComponent();
-            button_getf2p.Clicked += Button_getf2p_Clicked; 
+            button_getf2p.Clicked += Button_getf2p_Clicked;
+
+            iniciar();
+        }
+
+        private async Task iniciar()
+        {
+            await WaitAndExecute(1000, () =>
+            {
+                ReadFirebase();
+            });
+        }
+        protected async System.Threading.Tasks.Task WaitAndExecute(int milisec, System.Action actionToExecute)
+        {
+            await System.Threading.Tasks.Task.Delay(milisec);
+            actionToExecute();
+        }
+
+        private async void ReadFirebase() 
+        {
+            try 
+            {
+                var stream = await FileSystem.OpenAppPackageFileAsync("credential.json");
+                var reader = new StreamReader(stream);
+                var response = await reader.ReadToEndAsync();
+
+                if (FirebaseMessaging.DefaultInstance == null) 
+                {
+                    FirebaseApp.Create(new AppOptions()
+                    {
+                        Credential = GoogleCredential.FromJson(response)
+                    });
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         /*
         private async void Button_getf2p_Clicked(object sender, EventArgs e)

@@ -17,6 +17,7 @@ namespace Moxxii.mobile.ViewModels.Acount
     {
         #region Vars
         private StackLayout stkL;
+        Helper.Login.HelperLogin helperL;
         #endregion
 
         #region Properties
@@ -44,15 +45,18 @@ namespace Moxxii.mobile.ViewModels.Acount
 
         #region Command
         public ICommand OkLoginCommand { get; set; }
-        public ICommand OkSamuelGayCommand { get; set; }
         #endregion
 
         #region Constructor
         public LoginSessionSelectViewModel(List<StackLayout> stkConfig)
         {
+            helperL = new Helper.Login.HelperLogin();
             stkL = stkConfig[0].FindByName<StackLayout>("stkLoading");
             OkLoginCommand = new Command(async () => await TapOkSessionLoginCommands());
+            
         }
+
+        
         #endregion
 
         #region Methods 
@@ -97,7 +101,7 @@ namespace Moxxii.mobile.ViewModels.Acount
                 //await LoadingTrue();
                 //Device.BeginInvokeOnMainThread(async () => await LoadingTrue());
                 stkL.IsVisible = true;
-                var usuarioValido = await Login(UserName.ToString(),Password.ToString());
+                var usuarioValido = await helperL.Login(UserName.ToString(),Password.ToString());
                 if (!usuarioValido)
                 {
                    await DisplayAlertMessage("Mensaje", "Usuario invalido", "OK");

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.AppShell"
+	    xmlns:views="clr-namespace:App.Views.Acount"
+	    xmlns:views2="clr-namespace:App"
+	   Shell.FlyoutBehavior="Disabled">
+	<!--ContentTemplate="{DataTemplate views2:MainPage}"-->
+	<ShellContent
+        Title="Home"
+		
+		
+		ContentTemplate="{DataTemplate views:LoginPrecentationPage}"
+        Route="MainPage" />
+
+</Shell>

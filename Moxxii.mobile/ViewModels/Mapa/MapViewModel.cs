@@ -1,17 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.Graph;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
-using Moxxii.mobile.Controls.PopPup;
 using Moxxii.mobile.Models.Map;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Map = Microsoft.Maui.Controls.Maps.Map;
 
@@ -33,11 +23,8 @@ namespace Moxxii.mobile.ViewModels.Mapa
         [Obsolete]
         public MapViewModel(Map _map)
         {
-            //ShearLocationCommand = new Command(async () => await GetCurrentLocationAsync());
             NewMap = _map;
-
-            _ = InitLocation();//Inicia la localización actual
-            // InitCommands();
+            _ = InitLocation();
         }
         private async Task InitLocation()
         {
@@ -50,7 +37,7 @@ namespace Moxxii.mobile.ViewModels.Mapa
             }
             finally
             {
-                Console.WriteLine("\nError de StartActionAgainPrecentation: ");
+                Console.WriteLine("\nError de StartActionAgain: ");
             }
         }
         protected async System.Threading.Tasks.Task WaitAndExecute(int milisec, Action actionToExecute)
@@ -62,7 +49,6 @@ namespace Moxxii.mobile.ViewModels.Mapa
         protected override void InitCommands()
         {
             InitializeDataCommand = new Command(async () => await ExecuteInitializeDataCommandMapa());
-
         }
 
         [Obsolete]
@@ -73,9 +59,7 @@ namespace Moxxii.mobile.ViewModels.Mapa
             {
                 try
                 {
-                    
                     cts = new CancellationTokenSource();
-
                     var request = new GeolocationRequest(
                         GeolocationAccuracy.Medium,
                         TimeSpan.FromSeconds(10));

@@ -286,12 +286,10 @@ namespace Moxxii.Api.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CommentDrive")
-                        .IsRequired()
                         .HasMaxLength(550)
                         .HasColumnType("nvarchar(550)");
 
                     b.Property<string>("CommentPass")
-                        .IsRequired()
                         .HasMaxLength(550)
                         .HasColumnType("nvarchar(550)");
 
@@ -305,7 +303,6 @@ namespace Moxxii.Api.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Metadata")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
@@ -315,7 +312,7 @@ namespace Moxxii.Api.Migrations
                     b.Property<bool>("StatusTrip")
                         .HasColumnType("bit");
 
-                    b.Property<double>("TripPriceTotalMoxxii")
+                    b.Property<double?>("TripPriceTotalMoxxii")
                         .HasColumnType("float");
 
                     b.Property<double>("latEnd")

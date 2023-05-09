@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Moxxii.mobile.Views.Mapa.mapconductor.MapConductorPage"
+			  Shell.BackgroundColor="#FF746B"
+             Title="    Buscando pasaje ..."
+			 xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:modelsplace="clr-namespace:Moxxii.mobile.Models.Map"
+             x:Name="this"
+             Shell.TitleColor="#FFF">
+	<StackLayout VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+          BackgroundColor="#FFF">
+
+		<Grid Margin="10"
+          RowSpacing="10"
+          RowDefinitions="Auto,*"
+          VerticalOptions="FillAndExpand">
+			<!--<Button Text="Get Current Location"
+                Command="{Binding  BindingContext.ShearLocationCommand, Source={x:Reference this}}"/>-->
+
+			<maps:Map Grid.Row="1" x:Name="mapa_"
+                  ItemsSource="{Binding Places}">
+				<maps:Map.ItemTemplate>
+					<DataTemplate x:DataType="modelsplace:Place">
+						<maps:Pin Location="{Binding location}"
+                              Address="{Binding address}"
+                              Label="{Binding description}" />
+
+					</DataTemplate>
+				</maps:Map.ItemTemplate>
+				<maps:Map.MapElements>
+					<maps:Polygon StrokeColor="#FF9900"
+                          StrokeWidth="8"
+                          FillColor="#88FF9900">
+						<maps:Polygon.Geopath>
+							<sensors:Location>
+								<x:Arguments>
+									<x:Double>16.554881</x:Double>
+									<x:Double>-94.947359</x:Double>
+								</x:Arguments>
+							</sensors:Location>
+							<sensors:Location>
+								<x:Arguments>
+									<x:Double>16.552143</x:Double>
+									<x:Double>-94.947275</x:Double>
+								</x:Arguments>
+							</sensors:Location>
+
+						</maps:Polygon.Geopath>
+					</maps:Polygon>
+				</maps:Map.MapElements>
+			</maps:Map>
+		</Grid>
+
+		<!--<StackLayout x:Name="stkMapa"
+                     IsVisible="True"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
+            
+        </StackLayout>
+        <StackLayout x:Name="stkLoading"
+                     IsVisible="False"
+                     BackgroundColor="#98707070"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
+        </StackLayout>-->
+
+
+	</StackLayout>
+</ContentPage>

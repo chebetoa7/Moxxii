@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.Views.Acount.LoginPrecentationPage"
+			 NavigationPage.HasNavigationBar="False"
+			 Shell.NavBarIsVisible="False"
+             x:Name="this"
+             Shell.BackgroundColor="#FF746B"
+             Shell.UnselectedColor="White">
+	<Grid VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand"
+          ColumnDefinitions="3.3333*,3.3333*,3.3333*"
+          RowDefinitions="3.3333*,3.3333*,3.3333*">
+		<StackLayout Grid.Column="0" 
+                     Grid.Row="0" 
+                     Grid.ColumnSpan="3"
+                     Grid.RowSpan="3"
+                     BackgroundColor="Wheat"
+                     x:Name="stkPrecentation"
+                     IsVisible="True"
+                     >
+			<Image x:Name="ImgLogin" Source="logincontraste.png"
+                   VerticalOptions="CenterAndExpand"
+                   HeightRequest="225"/>
+		</StackLayout>
+		<StackLayout Grid.Column="0" 
+                     Grid.Row="0" 
+                     Grid.ColumnSpan="3"
+                     Grid.RowSpan="3"
+                     BackgroundColor="#FF746B"
+                     x:Name="stkMain"
+                     IsVisible="False"
+                     >
+			<Image x:Name="ImgUsuario" Source="grup_usuario.png"
+                   VerticalOptions="CenterAndExpand"
+				   BackgroundColor="Transparent"
+                   HeightRequest="225">
+				<Image.GestureRecognizers>
+					<TapGestureRecognizer Command="{Binding BindingContext.OpenUserCommand, Source={x:Reference this}}"
+                                                          />
+				</Image.GestureRecognizers>
+			</Image>
+			<Image x:Name="ImgConductor" Source="grup_conductor.png"
+                   VerticalOptions="CenterAndExpand"
+				   BackgroundColor="Transparent"
+				   
+                   HeightRequest="225">
+				<Image.GestureRecognizers>
+					<TapGestureRecognizer Command="{Binding BindingContext.OpenConductorCommand, Source={x:Reference this}}"
+                                                          />
+				</Image.GestureRecognizers>
+			</Image>
+
+		</StackLayout>
+	</Grid>
+</ContentPage>

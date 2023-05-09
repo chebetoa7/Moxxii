@@ -39,10 +39,15 @@
                                                           />
                 </Image.GestureRecognizers>
             </Image>
-            <Image x:Name="ImgConductor" Source="grup_conductor.png "
+			<Image x:Name="ImgConductor" Source="grup_conductor.png "
                    VerticalOptions="CenterAndExpand"
-                   HeightRequest="225"/>
+                   HeightRequest="225">
+				<Image.GestureRecognizers>
+					<TapGestureRecognizer Command="{Binding BindingContext.OpenConductorCommand, Source={x:Reference this}}"
+                                                          />
+				</Image.GestureRecognizers>
+			</Image>
 
-        </StackLayout>
+		</StackLayout>
     </Grid>
 </ContentPage>
