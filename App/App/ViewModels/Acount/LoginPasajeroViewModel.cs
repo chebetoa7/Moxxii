@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace App.ViewModels.Acount
@@ -56,36 +57,7 @@ namespace App.ViewModels.Acount
         #endregion
 
         #region Methods 
-        [Obsolete]
-        public async Task<bool> Login(string _usuario, string _password)
-        {
-            try
-            {
-
-                var lodata = new loginModel
-                {
-                    usuario = _usuario,
-                    password = _password
-                };
-
-                var apiManager = RestService.For<IMoxxiiApi>(MoxxiiApi.BaseUrl);
-                var tokent1 = apiManager.GetTokenUser(lodata);
-                var result = tokent1.Result;
-
-                if (result.success == true)
-                {
-
-                    return true;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return false;
-        }
+        
         #endregion
 
         #region Tap Command
@@ -98,18 +70,26 @@ namespace App.ViewModels.Acount
                 //Device.BeginInvokeOnMainThread(async () => await LoadingTrue());
                 stkL.IsVisible = true;
                 var usuarioValido = await helperL.Login(UserName.ToString(), Password.ToString());
-                if (!usuarioValido)
+                if (usuarioValido == null)
                 {
                     await DisplayAlertMessage("Mensaje", "Usuario invalido", "OK");
                 }
                 else
                 {
+                    var myValue = Preferences.Get("TokenFirebase", "");
+                    if (myValue != null) 
+                    {
+                        var updToken = await helperL.UpdateToken(myValue, usuarioValido.result.usuario.id, usuarioValido.result.token);
+                    }
                     await NavigateAsync(new DashboardPasajeroPage());
+                    //var toent_ = Preferences.Get("TokenFirebase");
+                    
                 }
 
             }
             catch (Exception ex)
             {
+                await DisplayAlertMessage("Mensaje", "Error: " + ex.Message, "OK");
                 Console.WriteLine("Error: " + ex.Message + ", TapOkSessionLoginCommands");
             }
             stkL.IsVisible = false;

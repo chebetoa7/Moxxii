@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Moxxii.Api.Body;
 using Moxxii.Api.Data;
 using Moxxii.Api.Models;
 using Moxxii.Api.Services;
 using Moxxii.Shared.Entities;
 using Refit;
+using System.Xml.Linq;
 
 namespace Moxxii.Api.Controllers
 {
@@ -14,7 +16,7 @@ namespace Moxxii.Api.Controllers
     public class SolicitudControllers : ControllerBase
     {
         private DataContext _context;
-        private SolicitudViaje solinueva;
+        private SolicitudViaje? solinueva;
         private SolicitudViaje? soli;
         private IMoxxiiApi apiManager;
         private Task<RouteMaps> mapCord;
@@ -35,26 +37,24 @@ namespace Moxxii.Api.Controllers
             try
             {
                 solinueva = await AsignarSolicitudChofer(solicitud);//, userDescartado);
-                _context.solicitudViajes.Add(solinueva);
+                _ = _context.solicitudViajes.Add(solinueva);
                     
                 await _context.SaveChangesAsync();
-                return new
-                {
-                    success = true,
-                    message = "exito",
-                    result = solinueva
-                };
+                return (
+                    success: true,
+                    message: "exito",
+                    result: solinueva
+                );
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return new
-                {
-                    success = false,
-                    message = "error: " + ex.Message,
-                    result = solinueva
-                };
+                return (
+                    success: false,
+                    message: "error: " + ex.Message,
+                    result: solinueva
+                );
             }
         }
 
@@ -207,9 +207,7 @@ namespace Moxxii.Api.Controllers
             }
         }
 
-
-
-        private async Task<SolicitudViaje> AsignarSolicitudChofer(SolicitudViaje solicitud)//, int IdUsuarioDescartado)
+        private async Task<SolicitudViaje?> AsignarSolicitudChofer(SolicitudViaje solicitud)//, int IdUsuarioDescartado)
         {
             List<Usuario> usuarios = new List<Usuario>();
             try 
@@ -235,7 +233,8 @@ namespace Moxxii.Api.Controllers
                 {
                     var usuariAEnviar = usuarios.FirstOrDefault();
                     solicitud.IdConductor = usuariAEnviar.Id;
-                    
+                    var usPasaje = await _context.Usuarios.Where(w => w.Id == solicitud.IdPasajero).FirstOrDefaultAsync();
+                    await EnviarPushLocal(solicitud, usuariAEnviar.Tokenfirebase, "Nuevo viaje","Nueva solicitud del usuario: " + usPasaje.Name + usPasaje.LastName, MoxxiiApi.AutoritationFCM);
                     return solicitud;
                 }
 
@@ -280,26 +279,39 @@ namespace Moxxii.Api.Controllers
             }
         }
 
-        private void EnviarPushLocal(SolicitudViaje solicitud)
+        private async Task EnviarPushLocal(SolicitudViaje solicitud, string tokenDivice, string titulo, string mensaje, string tokenFCM)
         {
-            var apiManager = RestService.For<IMoxxiiApi>(MoxxiiApi.BasePushUrl);
-            fcmBody fcmBody_ = new fcmBody();
 
-            var titulo = fcmBody_.data.title = "";
-            var message = fcmBody_.data.message = "";
-
-            var data_ = new Moxxii.Api.Body.Data 
+            /*var apiManager = RestService.For<IMoxxiiApi>(
+                    MoxxiiApi.BasePushUrl,
+                    new RefitSettings()
+                    {
+                        AuthorizationHeaderValueGetter = () =>
+                        Task.FromResult(tokenFCM)
+                    });*/
+            try
             {
-                title = titulo,
-                message = message,
-            };
-            var _body = new fcmBody
-            {
-                to = "",
-                data = data_
-            };
+                var apiManager = RestService.For<IMoxxiiApi>(MoxxiiApi.BasePushUrl);
 
-            //var tokent1 = apiManager.NewPushNotification(_body);
+
+                var notification_ = new Moxxii.Api.Body.Notification
+                {
+                    title = titulo,
+                    body = mensaje,
+                };
+                var _body = new fcmBody
+                {
+                    to = tokenDivice,
+                    notification = notification_
+                };
+
+
+                var send = await apiManager.SendPush(_body, "key=" + tokenFCM);
+                var result = send.results;
+            } catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
             //var distance = tokent1.Result.routes.FirstOrDefault().legs.FirstOrDefault().distance.ToString();
         }
     }

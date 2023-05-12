@@ -105,6 +105,20 @@ namespace Moxxii.Shared.Entities
         [MaxLength(150, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
         public string Password { get; set; } = null!;
         #endregion
+
+        #region configPush
+
+        [DisplayName("Token")]
+        [MaxLength(500, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string? Tokenfirebase { get; set; } = null;
+
+        [DisplayName("Ultima hora de actualización")]
+        [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caractéres")]
+        public string DataPushUpdate { get; set; }
+
+        [DisplayName("Esta logeado")]
+        public bool LoginNow { get; set; }
+        #endregion
         
     }
 }

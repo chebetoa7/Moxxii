@@ -6,6 +6,8 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using App.Views.Mapas;
+using App.Views.Dashboard;
+using Xamarin.Essentials;
 
 namespace App.ViewModels.Acount
 {
@@ -57,14 +59,30 @@ namespace App.ViewModels.Acount
             try
             {
                 stkL.IsVisible = true;
-                var usuarioValido = await helperL.Login(UserName.ToString(), Password.ToString());
-                if (!usuarioValido)
+                /*var usuarioValido = await helperL.Login(UserName.ToString(), Password.ToString());
+                if (usuarioValido == null)
                 {
                     await DisplayAlertMessage("Mensaje", "Usuario invalido", "OK");
                 }
                 else
                 {
                     await NavigateAsync(new MapConductorPage());
+                }*/
+                var usuarioValido = await helperL.Login(UserName.ToString(), Password.ToString());
+                if (usuarioValido == null)
+                {
+                    await DisplayAlertMessage("Mensaje", "Usuario invalido", "OK");
+                }
+                else
+                {
+                    var myValue = Preferences.Get("TokenFirebase", "");
+                    if (myValue != null)
+                    {
+                        var updToken = await helperL.UpdateToken(myValue, usuarioValido.result.usuario.id, usuarioValido.result.token);
+                    }
+                    await NavigateAsync(new DashboardPasajeroPage());
+                    //var toent_ = Preferences.Get("TokenFirebase");
+
                 }
 
             }

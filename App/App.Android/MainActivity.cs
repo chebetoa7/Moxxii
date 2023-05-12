@@ -5,6 +5,8 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using AndroidX.Core.OS;
+using Android.Gms.Common;
+using Xamarin.Essentials;
 
 namespace App.Droid
 {
@@ -15,6 +17,7 @@ namespace App.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            IsPlayServicesAvailable();
             Rg.Plugins.Popup.Popup.Init(this);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -29,6 +32,13 @@ namespace App.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        public void IsPlayServicesAvailable()
+        {
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            bool isGooglePlayServce = resultCode != ConnectionResult.Success;
+            Preferences.Set("isGooglePlayServce", isGooglePlayServce);
+
         }
     }
 }

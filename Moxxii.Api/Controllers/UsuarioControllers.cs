@@ -166,6 +166,90 @@ namespace Moxxii.Api.Controllers
         }
 
         [HttpPost]
+        [Route("/api/Usuario/startjournal")]
+        [Authorize]
+        public async Task<dynamic> StartJournal(string disponibility_, int id) 
+        {
+            List<Usuario> usu = new List<Usuario>();
+            try
+            {
+                usu = await _context.Usuarios.
+                    Where(x => x.Id == id).ToListAsync();
+                var nuevoUsuario = usu.FirstOrDefault();
+                if (nuevoUsuario != null) 
+                {
+                    nuevoUsuario.Disponibility = disponibility_;
+                    _context.Usuarios.Update(nuevoUsuario);
+                    await _context.SaveChangesAsync();
+                    return new
+                    {
+                        sucess = true,
+                        message = "exito",
+                        result = Ok()
+                    };
+                }
+                return new
+                {
+                    sucess = true,
+                    message = "exito",
+                    result = Ok("usuario no encontrado")
+                };
+            }
+            catch(Exception ex) 
+            {
+                return new
+                {
+                    sucess = false,
+                    message = "Error: " + ex.Message,
+                    result = Results.BadRequest(ex.Message.ToString())
+                };
+            }
+        }
+
+        [HttpGet]
+        [Route("/api/Usuario/updateToken")]
+        [Authorize]
+        public async Task<dynamic> UpdateToken(string token, int id) 
+        {
+            List<Usuario> usu = new List<Usuario>();
+            try
+            {
+                usu = await _context.Usuarios.
+                    Where(x => x.Id == id).ToListAsync();
+
+                var nuevoUsuario = usu.FirstOrDefault();
+
+                if (nuevoUsuario != null) 
+                {
+                    nuevoUsuario.Tokenfirebase = token;
+                    _context.Usuarios.Update(nuevoUsuario);
+                    await _context.SaveChangesAsync();
+                    return new
+                    {
+                        sucess = true,
+                        message = "exito",
+                        result = Ok("Actualizado")
+                    };
+                }
+                return new
+                {
+                    sucess = true,
+                    message = "exito",
+                    result = Ok("usuario no encontrado y no actualizado")
+                };
+            }
+            catch(Exception ex) 
+            {
+                return new
+                {
+                    sucess = false,
+                    message = "Error: " + ex.Message,
+                    result = BadRequest(ex.Message.ToString())
+                };
+            }
+        }
+
+        [HttpPost]
         [Route("/api/Usuario/Remove")]
         [Authorize]
         public async Task<dynamic> DeleteUsuario(Usuario usuario) 
@@ -226,7 +310,7 @@ namespace Moxxii.Api.Controllers
                 Where(w => w.Disponibility == "libre" ).
                 Where(w => w.City == solicitud.City).
                 Where(w => w.Distric == solicitud.Dictric).
-                Where(w => w.TypeUser == "tdm").
+                //Where(w => w.TypeUser == "tdm").
                 ToListAsync();
 
 

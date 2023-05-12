@@ -22,5 +22,8 @@ namespace App.Services
 
         [Post("/api/Usuario/token")]
         Task<ResponseToken> GetTokenUser(loginModel dataLogin);
+
+        [Get("/api/Usuario/updateToken?token={token}&id={id}")]
+        Task<tokenUpdateResponse> UpdateToken(string token, int id);
     }
 }

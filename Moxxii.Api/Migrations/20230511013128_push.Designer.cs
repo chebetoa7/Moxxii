@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moxxii.Api.Data;
 
@@ -11,9 +12,11 @@ using Moxxii.Api.Data;
 namespace Moxxii.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230511013128_push")]
+    partial class push
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,10 +201,9 @@ namespace Moxxii.Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("DataPushUpdate")
-                        .IsRequired()
+                    b.Property<DateTime>("DataPushUpdate")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("DateAge")
                         .HasColumnType("int");
@@ -257,10 +259,6 @@ namespace Moxxii.Api.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Tokenfirebase")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<string>("TypeUser")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -271,6 +269,10 @@ namespace Moxxii.Api.Migrations
 
                     b.Property<double>("UbicationRealLon")
                         .HasColumnType("float");
+
+                    b.Property<string>("tokenfirebase")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
