@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Foundation;
@@ -20,12 +21,14 @@ namespace App.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
+        private string dbPathConfig;
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
             Rg.Plugins.Popup.Popup.Init();
             Xamarin.FormsGoogleMaps.Init("AIzaSyC2XudfRAoNIVBkWWwi9Y20obpb00T6jU0");
-            LoadApplication(new App());
+            dbPathConfig = Services.FileAccess.GetLocalFilePath("configuser.db3");
+            LoadApplication(new App(dbPathConfig));
 
             return base.FinishedLaunching(app, options);
         }

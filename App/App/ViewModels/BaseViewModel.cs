@@ -72,5 +72,17 @@ namespace App.ViewModels
             await PopupNavigation.Instance.PopAsync(true);
         }
         #endregion
+
+        #region PasajeroPopup
+        public async Task ShareMotoPopup()
+        {
+            //await MauiPopup.PopupAction.DisplayPopup(new StarRutePopup());
+            await PopupNavigation.Instance.PushAsync(new ShareMotoTaxxiiPopup());
+        }
+        public async Task ShareMotoStopPopup()
+        {
+            await PopupNavigation.Instance.PopAsync(true);
+        }
+        #endregion
     }
 }

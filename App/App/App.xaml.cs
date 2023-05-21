@@ -8,9 +8,10 @@ namespace App
     public partial class App : Application
     {
         [Obsolete]
-        public App()
+        public App(string configBD)
         {
             InitializeComponent();
+            DB.ConfigRepository.Inicializador(configBD);
 
             MainPage = new AppShell();
         }

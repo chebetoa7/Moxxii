@@ -1,7 +1,10 @@
 ﻿using App.Views.Acount;
+using App.Views.Dashboard;
+using App.Views.Mapas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -82,7 +85,7 @@ namespace App.ViewModels.Acount
         {
             try
             {
-                await WaitAndExecute(2800, () =>
+                await WaitAndExecute(1800, () =>
                 {
                     stkk1.BackgroundColor = Color.FromHex("#FFFFFF");
                     imgg.Source = "loginsplash.png";
@@ -98,10 +101,29 @@ namespace App.ViewModels.Acount
         {
             try
             {
-                await WaitAndExecute(1800, () =>
+                await WaitAndExecute(1200, () =>
                 {
-                    stkk1.IsVisible = false;
-                    stkk2.IsVisible = true;
+                    
+                    var usuarioConfig = DB.ConfigRepository.Instancia.GetConfigUser().ToList();
+
+                    if (usuarioConfig.Count() > 0)
+                    {
+                        var usuario = usuarioConfig.FirstOrDefault();
+                        if (usuario.typeUser == "pasajero")
+                        {
+                            _ = NavigateAsync(new DashboardPasajeroPage());
+                        }
+                        else
+                        {
+                            _ = NavigateAsync(new MapConductorPage());
+                        }
+                    }
+                    else 
+                    {
+                        stkk1.IsVisible = false;
+                        stkk2.IsVisible = true;
+                    }
+                    
                 });
             }
             finally

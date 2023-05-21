@@ -13,11 +13,15 @@ namespace App.Droid
     [Activity(Label = "App", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        private string dbPathConfig;
+
         [Obsolete]
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             IsPlayServicesAvailable();
+            dbPathConfig = Service.FileAccess.GetLocalFilePath("configuser.db3");
+
             Rg.Plugins.Popup.Popup.Init(this);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -25,7 +29,7 @@ namespace App.Droid
 
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             
-            LoadApplication(new App());
+            LoadApplication(new App(dbPathConfig));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

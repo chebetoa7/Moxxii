@@ -1,12 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App.Views.Mapas.MapConductorPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+			 x:Class="App.Views.Mapas.MapConductorPage"
+			 Shell.BackgroundColor="#FF746B"
+             Title="    Buscando pasaje ..."
+			 x:Name="this"
+             Shell.TitleColor="#FFF">
+	<StackLayout VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+          BackgroundColor="#FFF">
+
+		<Grid Margin="10"
+          RowSpacing="10"
+          RowDefinitions="Auto,*"
+          VerticalOptions="FillAndExpand">
+			<!--<Button Text="Get Current Location"
+                Command="{Binding  BindingContext.ShearLocationCommand, Source={x:Reference this}}"/>-->
+
+			<maps:Map Grid.Row="1" x:Name="mapa_"
+					  BackgroundColor="BurlyWood"
+                  ItemsSource="{Binding Places}">
+
+			</maps:Map>
+		</Grid>
+
+		
+
+
+	</StackLayout>
 </ContentPage>

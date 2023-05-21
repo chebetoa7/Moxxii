@@ -69,18 +69,22 @@ namespace App.ViewModels.Acount
                     await NavigateAsync(new MapConductorPage());
                 }*/
                 var usuarioValido = await helperL.Login(UserName.ToString(), Password.ToString());
-                if (usuarioValido == null)
+                if (usuarioValido != null)
                 {
-                    await DisplayAlertMessage("Mensaje", "Usuario invalido", "OK");
-                }
-                else
-                {
+                    if(usuarioValido.success==false)
+                        await DisplayAlertMessage("Mensaje", "Usuario invalido", "OK");
+
+                    
                     var myValue = Preferences.Get("TokenFirebase", "");
                     if (myValue != null)
                     {
                         var updToken = await helperL.UpdateToken(myValue, usuarioValido.result.usuario.id, usuarioValido.result.token);
                     }
-                    await NavigateAsync(new DashboardPasajeroPage());
+                    await NavigateAsync(new MapConductorPage());
+                }
+                else
+                {
+                    await DisplayAlertMessage("Error al iniciar sessión", "Existe un error de comunicación de datos, contacte con proveedor moxxii", "OK");
                     //var toent_ = Preferences.Get("TokenFirebase");
 
                 }

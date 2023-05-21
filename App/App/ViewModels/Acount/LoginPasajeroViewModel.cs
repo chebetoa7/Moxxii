@@ -66,8 +66,6 @@ namespace App.ViewModels.Acount
         {
             try
             {
-                //await LoadingTrue();
-                //Device.BeginInvokeOnMainThread(async () => await LoadingTrue());
                 stkL.IsVisible = true;
                 var usuarioValido = await helperL.Login(UserName.ToString(), Password.ToString());
                 if (usuarioValido == null)
@@ -76,13 +74,12 @@ namespace App.ViewModels.Acount
                 }
                 else
                 {
-                    var myValue = Preferences.Get("TokenFirebase", "");
-                    if (myValue != null) 
+                    var myValueTokenF = Preferences.Get("TokenFirebase", "");
+                    if (myValueTokenF != null) 
                     {
-                        var updToken = await helperL.UpdateToken(myValue, usuarioValido.result.usuario.id, usuarioValido.result.token);
+                        var updToken = await helperL.UpdateToken(myValueTokenF, usuarioValido.result.usuario.id, usuarioValido.result.token);
                     }
                     await NavigateAsync(new DashboardPasajeroPage());
-                    //var toent_ = Preferences.Get("TokenFirebase");
                     
                 }
 
@@ -93,8 +90,6 @@ namespace App.ViewModels.Acount
                 Console.WriteLine("Error: " + ex.Message + ", TapOkSessionLoginCommands");
             }
             stkL.IsVisible = false;
-            //Device.BeginInvokeOnMainThread(async () => await LoadingFalse());
-            // await LoadingFalse();
 
         }
 

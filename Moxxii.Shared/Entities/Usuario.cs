@@ -118,7 +118,9 @@ namespace Moxxii.Shared.Entities
 
         [DisplayName("Esta logeado")]
         public bool LoginNow { get; set; }
-        #endregion
+
         
+        #endregion
+
     }
 }

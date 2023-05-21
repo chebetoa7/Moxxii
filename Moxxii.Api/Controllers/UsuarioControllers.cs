@@ -1,21 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Moxxii.Api.Data;
 using Moxxii.Api.Models;
-using Moxxii.Shared.Models;
 using Moxxii.Shared.Entities;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using JwtRegisteredClaimNames = System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames;
-using Microsoft.AspNetCore.Authorization;
-using System;
 
 namespace Moxxii.Api.Controllers
 {
@@ -37,6 +31,121 @@ namespace Moxxii.Api.Controllers
         }
 
         
+
+        [HttpPost]
+        [Route("/api/Usuario/GetLibre")]
+        [Authorize]
+        public async Task<dynamic> GetLibre([FromBody] Object optData)
+        {
+            try
+            {
+                var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
+                string city = data.city.ToString();
+                string disponibility = data.disponibility.ToString();
+
+                var usuario = await _context.Usuarios.
+                    Where(w => w.City == city && w.Disponibility == disponibility).FirstOrDefaultAsync();
+                if (usuario != null)
+                {
+                    return new
+                    {
+                        success = false,
+                        message = "Exito",
+                        usuario = usuario.Id
+                    };
+                }
+
+
+                return new
+                {
+                    success = true,
+                    message = "NoEncontrado",
+                    result = 0
+                };
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.ToString());
+                return new
+                {
+                    success = true,
+                    message = "Error: " +ex.Message,
+                    result = -1
+                };
+            }
+        }
+        
+        [HttpPost]
+        [Route("/api/Usuario/GetLibre2")]
+        public async Task<dynamic> GetLibre2([FromBody] Object optData)
+        {
+            List<Usuario?> usuario_ = new List<Usuario>();
+            Usuario usuario_Encontrado = new Usuario();
+            var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
+            string data1 = data.data1.ToString();
+            string data2 = data.data2.ToString();
+
+            var us = await _context.Usuarios.Where(w => w.City == "Juchitan").
+                Where(w => w.Disponibility == "libre").FirstOrDefaultAsync();
+            if(data1 == "Juchitan")
+            {
+                var usuarios = await _context.Usuarios.Where(w => w.City == "Juchitan").ToListAsync();
+                usuario_ = usuarios;
+            }
+
+            if (data2 == "Libre")
+                usuario_ = usuario_.Where(w => w.Disponibility == "Libre").ToList();
+
+            if (us == null)
+            {
+                
+                return new
+                {
+                    success = false,
+                    message = "usuario no encontrado",
+                    usuario = us
+                };
+            }
+            //usuario_Encontrado = usuario_.FirstOrDefault();
+            return new
+            {
+                success = true,
+                message = "Exito",
+                result = us
+            };
+        }
+
+        [HttpPost]
+        [Route("/api/Usuario/ShareUserFree")]
+        public async Task<dynamic> ShareUserFree([FromBody] Object optData)
+        {
+            var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
+            string cityShare = data.city.ToString();
+            string AviableShare = data.aviable.ToString();
+
+            var usuario = await _context.Usuarios.
+                Where(w => w.City == cityShare).
+                Where(y => y.Disponibility == AviableShare).FirstOrDefaultAsync();
+            if (usuario == null)
+            {
+                return new
+                {
+                    success = false,
+                    message = "Credenciales incorrectas",
+                    usuario = usuario
+                };
+            }
+            var usuaValido = new UsuarioValido
+            {
+                usuario = usuario
+            };
+            return new
+            {
+                success = true,
+                message = "Exito",
+                result = usuaValido
+            };
+        }
 
         [HttpPost]
         [Route("/api/Usuario/token")]
@@ -96,6 +205,7 @@ namespace Moxxii.Api.Controllers
 
         [HttpGet]
         [Route("/api/Usuario/Get")]
+        [Authorize]
         public async Task<dynamic> GetUsuario()
         {
             try 
@@ -109,9 +219,71 @@ namespace Moxxii.Api.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("/api/Usuario/GetUserForTravel")]
+        [Authorize]
+        public async Task<dynamic> GetUserForTravel([FromBody] Object optData) 
+        {
+            var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
+            string city_ = data.city.ToString();
+            string aviable = data.aviable.ToString();
+            Usuario? usuario = new Usuario();
+
+            try 
+            {
+                usuario = await _context.Usuarios.
+                                Where(w => w.City == city_ &&
+                                      w.Disponibility == aviable).FirstOrDefaultAsync();
+                
+
+                if (usuario == null) 
+                {
+                    return new
+                    {
+                        success = true,
+                        message = "fallido",
+                        IdConductor = usuario
+                    };
+                }
+                else
+                    return new
+                    {
+                        success = true,
+                        message = "exito",
+                        IdConductor = usuario
+                    };
+
+            } catch (Exception ex) 
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return new
+                {
+                    success = true,
+                    message = "Error: " + ex.Message,
+                    IdConductor = usuario
+                };
+            }
+            
+        }
+
+        [HttpGet]
+        [Route("/api/Usuario/GetAvailability")]
+        public async Task<dynamic> GetUsuarioAvailability(string city_)
+        {
+            try //Checa
+            {
+                var usuarios = await _context.Usuarios.Where(w => w.Disponibility == "libre").ToListAsync();
+                var usuariosCity = usuarios.Where(w => w.Email == city_);
+                var us = await _context.Usuarios.ToListAsync();
+                return Ok(us);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet]
         [Route("/api/Usuario/GetById")]
-        [Authorize]
         public async Task<dynamic> GetByIdUsuario(int id)
         {
             try 
@@ -165,7 +337,7 @@ namespace Moxxii.Api.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("/api/Usuario/startjournal")]
         [Authorize]
         public async Task<dynamic> StartJournal(string disponibility_, int id) 

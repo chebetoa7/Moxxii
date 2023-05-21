@@ -3,15 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Views.Acount.LoginConductorPage"
 			 Shell.NavBarIsVisible="False"
-			 BackgroundColor="#FFF"
-			 Title="Logeo">
+			 BackgroundColor="#FFF">
 	<Grid RowDefinitions="3.333*,3.333*,3.333*"
               ColumnDefinitions="3.333*,3.333*,3.333*"
+		  VerticalOptions="FillAndExpand"
+		  HorizontalOptions="FillAndExpand"
               BackgroundColor="Transparent">
 		<StackLayout Grid.Column="0"
-                         Grid.Row="0"
-                         Grid.ColumnSpan="3"
-                         Grid.RowSpan="3"
+						 Grid.Row="0"
+						 Grid.ColumnSpan="3"
+						 Grid.RowSpan="3"
                          x:Name="stkSessionMain"
                          IsVisible="True"
                          BackgroundColor="Transparent">
@@ -21,10 +22,9 @@
 				<StackLayout Grid.Row="0" x:Name="stkImageLogeo"
                                  BackgroundColor="#FFF">
 					<Image Source="dashboardconductor.png"
-                               VerticalOptions="FillAndExpand"
-                               HorizontalOptions="FillAndExpand"
-                               HeightRequest="500"
-                               Margin="0,30,0,0"
+                               WidthRequest="450"
+						   BackgroundColor="Transparent"
+                               Margin="0,0,0,0"
                                >
 						<Image.GestureRecognizers>
 
@@ -37,7 +37,7 @@
                                  >
 					<StackLayout Padding="10,130,20,0"
                                      WidthRequest="290"
-                                     HorizontalOptions="Center">
+                                     HorizontalOptions="CenterAndExpand">
 						<Frame BorderColor="Beige"
                                    Padding="0,5,0,0"
                                BackgroundColor="#E5E5E5">
@@ -50,7 +50,8 @@
 					</StackLayout>
 
 					<StackLayout Padding="10,10,20,0"
-                                     WidthRequest="290">
+								 WidthRequest="290"
+								 HorizontalOptions="CenterAndExpand">
 						<Frame BorderColor="Beige"
                                    Padding="0,5,0,0"
                                BackgroundColor="#E5E5E5">

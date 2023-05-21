@@ -12,6 +12,8 @@ using Xamarin.Essentials;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Geolocator;
 using System.Linq;
+using Position = Xamarin.Forms.GoogleMaps.Position;
+using System.Net.NetworkInformation;
 
 namespace App.ViewModels.Mapas
 {
@@ -26,10 +28,12 @@ namespace App.ViewModels.Mapas
         #endregion
 
         #region Constructor
+        [Obsolete]
         public MapConductorViewModel(Xamarin.Forms.GoogleMaps.Map _map)
         {
             NewMap = _map;
             _ = InitLocation();
+            _ = IniciaRutaPopup();
         }
         #endregion
 
@@ -62,6 +66,7 @@ namespace App.ViewModels.Mapas
         #endregion
 
         #region MethodsLocation
+        [Obsolete]
         private async Task InitLocation()
         {
             try
@@ -81,54 +86,6 @@ namespace App.ViewModels.Mapas
         {
             await System.Threading.Tasks.Task.Delay(milisec);
             actionToExecute();
-        }
-
-
-
-        [Obsolete]
-        private Task ExecuteInitializeDataCommandMapa()
-        {
-            Device.BeginInvokeOnMainThread(async () => await LoadingTrue());
-            return Task.Run(async () =>
-            {
-                try
-                {
-
-                    cts = new CancellationTokenSource();
-
-                    var request = new GeolocationRequest(
-                        GeolocationAccuracy.Medium,
-                        TimeSpan.FromSeconds(10));
-
-                    var locator = CrossGeolocator.Current;
-                    var position = await Geolocation.GetLocationAsync();
-
-                    var _location = await Geolocation.GetLocationAsync(request, cts.Token);
-                    var placemarks = await Geocoding.GetPlacemarksAsync(_location);
-                    var _address = placemarks?.FirstOrDefault()?.AdminArea;
-
-                    Places.Clear();
-                    Places.Add(new Place()
-                    {
-                        location = _location,
-                        address = _address,
-                        description = "Current Location"
-                    });
-
-                    Xamarin.Forms.GoogleMaps.Position loc1 = new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude);
-
-                    MapSpan mapSpan = new MapSpan(loc1, 0.01, 0.01);
-                    var ma_pa = NewMap.FindByName<Xamarin.Forms.GoogleMaps.Map>("mapa_");
-                    ma_pa.MoveToRegion(mapSpan);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-                IniciaRutaPopup();
-                Device.BeginInvokeOnMainThread(async () => await LoadingFalse());
-            });
-
         }
 
         [Obsolete]
@@ -151,35 +108,39 @@ namespace App.ViewModels.Mapas
                 var placemarks = await Geocoding.GetPlacemarksAsync(_location);
                 var _address = placemarks?.FirstOrDefault()?.AdminArea;
 
-                Places.Clear();
-                Places.Add(new Place()
+                /*Polyline poliline = new Polyline
                 {
-                    location = _location,
-                    address = _address,
-                    description = "Ubicación actual"
-                });
-
+                    StrokeWidth = 8,
+                    StrokeColor = Color.FromHex("#1BA1E2"),
+                };
+                poliline.Positions.Clear();
+                poliline.Positions.Add(new Position(16.554734, -94.947472));
+                poliline.Positions.Add(new Position(16.554229, -94.947440));
+                poliline.Positions.Add(new Position(16.554875, -94.944350));
+                */
                 Xamarin.Forms.GoogleMaps.Position loc1 = new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude);
                 MapSpan mapSpan = new MapSpan(loc1, 0.01, 0.01);
+                
+                Pin Moto = new Pin()
+                {
+                    Label = "Moxxii",
+                    Type = PinType.Place,
+                    Address = _address,
+                    Icon = (Device.RuntimePlatform == Device.Android) ? BitmapDescriptorFactory.FromBundle("motocircule.png") : BitmapDescriptorFactory.FromView(new Image() { Source = "motocircule.png", WidthRequest = 23, HeightRequest = 23 }),
+                    Position = new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude)
+                };
                 var ma_pa = NewMap.FindByName<Xamarin.Forms.GoogleMaps.Map>("mapa_");
                 ma_pa.MoveToRegion(mapSpan);
-
+                ma_pa.Pins.Add(Moto);
+                //ma_pa.Polylines.Add(poliline);
 
             }
             catch (Exception ex)
             {
-                // Unable to get location
+                Console.WriteLine(ex.Message);
             }
-            Device.BeginInvokeOnMainThread(async () => await LoadingFalse());
+            Device.BeginInvokeOnMainThread(async () => await LoadingFalse()); 
         }
-
-
-        /*[RelayCommand]
-        private void DisposeCancellationToken()
-        {
-            if (cts != null && !cts.IsCancellationRequested)
-                cts.Cancel();
-        }*/
         #endregion
 
     }

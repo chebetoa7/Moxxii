@@ -13,14 +13,9 @@
 			<ActivityIndicator IsRunning="True"
 							   Margin="0,50,0,0"
 						   Color="#323232"/>
-			<Image Source="salir.png"
-					HorizontalOptions="EndAndExpand"
-					Margin="1,120,-150,1"
-					BackgroundColor="Transparent"
-					WidthRequest="450"/>
-			<Image Source="modal_asignado_moto.png"
-				   Margin="0,-15,0,0"
-					   WidthRequest="250"/>
+			<Label Text="Espere, cargando ..."
+				   TextColor="#323232"
+				   FontSize="24"/>
 		</StackLayout>
 	</StackLayout>
 	

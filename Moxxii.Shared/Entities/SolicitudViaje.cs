@@ -12,7 +12,7 @@ namespace Moxxii.Shared.Entities
     {
         #region Identificador
         public int Id { get; set; }
-        public int? IdPasajero { get; set; }
+        public int IdPasajero { get; set; }
         public int? IdConductor { get; set; }
 
         #endregion
@@ -53,6 +53,8 @@ namespace Moxxii.Shared.Entities
         [DisplayName("Confirmado rechasado")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string ConfirmationStatus { get; set; } = null!;
+
+        
         #endregion
     }
 }
