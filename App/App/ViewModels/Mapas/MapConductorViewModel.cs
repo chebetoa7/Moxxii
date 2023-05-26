@@ -14,6 +14,9 @@ using Plugin.Geolocator;
 using System.Linq;
 using Position = Xamarin.Forms.GoogleMaps.Position;
 using System.Net.NetworkInformation;
+using Rg.Plugins.Popup.Services;
+using App.Services;
+using static Xamarin.Essentials.Permissions;
 
 namespace App.ViewModels.Mapas
 {
@@ -25,6 +28,7 @@ namespace App.ViewModels.Mapas
 
         private CancellationTokenSource cts;
         private Xamarin.Forms.GoogleMaps.Map NewMap;
+        ManagerServices managerServices;
         #endregion
 
         #region Constructor
@@ -32,8 +36,26 @@ namespace App.ViewModels.Mapas
         public MapConductorViewModel(Xamarin.Forms.GoogleMaps.Map _map)
         {
             NewMap = _map;
+            managerServices = new Services.ManagerServices();
             _ = InitLocation();
-            _ = IniciaRutaPopup();
+
+
+            //VereficarExistenciaViajes(5000);
+        }
+
+        [Obsolete]
+        private async Task VereficarExistenciaViajes()
+        {
+            try 
+            {
+                
+                    await verificarMin();
+                
+            } catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         }
         #endregion
 
@@ -74,8 +96,34 @@ namespace App.ViewModels.Mapas
                 await WaitAndExecute(100, () =>
                 {
                     _ = GetCurrentLocationAsync();
+                    
 
                 });
+            }
+            finally
+            {
+                Console.WriteLine("\nError de InitLocation ");
+            }
+        }
+
+
+        [Obsolete]
+        //Verificar que no exista viaje en caso de ser conductor
+        //Verificar que el conductor acepte el viaje en caso de ser pasaje
+        //countMin son los minutos que le envias o lapso de tiempo para volver a realizar la petición
+        private async Task verificarMin()
+        {
+            try
+            {
+                
+                    await WaitAndExecute(120000, () =>
+                    {
+                        _ = VerificarSiAceptoRuta();
+                        _ = VereficarExistenciaViajes();
+
+                    });
+                
+                
             }
             finally
             {
@@ -89,7 +137,7 @@ namespace App.ViewModels.Mapas
         }
 
         [Obsolete]
-        private async Task GetCurrentLocationAsync()
+        private async Task GetCurrentLocationAsync()//Localiza al usuario en el mapa
         {
             try
             {
@@ -139,7 +187,83 @@ namespace App.ViewModels.Mapas
             {
                 Console.WriteLine(ex.Message);
             }
-            Device.BeginInvokeOnMainThread(async () => await LoadingFalse()); 
+            Device.BeginInvokeOnMainThread(async () => await LoadingFalse());
+
+            await verificarInicioRutaYPushViaje();//Verificar si exite un nuevo viaje y mostrar modal
+            await VereficarExistenciaViajes();
+
+
+        }
+
+        private async Task verificarInicioRutaYPushViaje()
+        {
+            try 
+            {
+                var confUp = DB.ConfigRepository.Instancia.GetConfigUser().FirstOrDefault();
+                if (confUp.disponibility == "libre")//Si ya inicio dia
+                {
+                    if (App.ActionPush_)//Si existe push 
+                    {
+                        //await DisplayAlertMessage("solicitud", "Viaje nuevo", "OK");
+                        if (vanSolicitudViaje == false)
+                            Device.BeginInvokeOnMainThread(async () => await SolicitudStartPopup());
+                    }
+                    else 
+                    {
+                        /*En caso que no encuentre push al entrar espera 1.5 minutos
+                         * para verificar si la push no se envio y ver en el sistema
+                         * y comprovar que no tenga alguna solicitu de viaje
+                        */
+                        if (vanSolicitudViaje == false) //vanSolicitudViaje en false sig. no a existe viaje volver a verificar
+                        {
+                            await WaitAndExecute(1600, () =>
+                            {
+                                _ = VerificarSiAceptoRuta();
+
+                            });
+                        }
+                        
+                        
+                    }
+                }
+                else//En caso de no iniciar dia mostrar modal para iniciar su día
+                {
+                    _ = IniciaRutaPopup();
+                }
+            } catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message); 
+            }
+        }
+        bool vanAceptado = false;//Viaje aceptado o no cuando eres pasajero
+        bool vanSolicitudViaje = false;//Viaje para ver si tienes solicitud de viaje conductor
+        private async Task VerificarSiAceptoRuta()
+        {
+            try 
+            {
+                var idP = Preferences.Get("config_user_id", 0);
+
+                if (vanSolicitudViaje == false)
+                {
+                    var verificarViaje_ = await managerServices.EscanTravel(idP);
+                    if (!verificarViaje_)
+                    {
+
+                        vanSolicitudViaje = false;
+                        //no existe solicitu a conductor - vanAceptado = false
+                    }
+                    else
+                    {
+                        Device.BeginInvokeOnMainThread(async () => await SolicitudStartPopup());
+                        vanSolicitudViaje = true;
+                        //Tienes un viaje para aceptar y notificar por push y por api
+                    }
+                }
+            }
+            catch(Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         #endregion
 

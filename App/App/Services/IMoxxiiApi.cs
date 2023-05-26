@@ -51,5 +51,8 @@ namespace App.Services
 
         [Post("/api/NotificationFirebase/Push")]
         Task<Responsemoxxii> SendPushFirebase(FCMBody fcm);
+
+        [Get("/api/solicitud/escaneoSolicitudViaje?id={id}")]
+        Task<Responsemoxxii> GetVerificarViaje(int id);
     }
 }

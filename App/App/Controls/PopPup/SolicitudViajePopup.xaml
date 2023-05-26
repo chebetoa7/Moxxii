@@ -1,18 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<popup:PopupPage 
+	xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+	xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App.MainPage"
-			 Shell.NavBarIsVisible="False"
-			 BackgroundColor="#C7C7C7">
-
-    <StackLayout VerticalOptions="FillAndExpand">
-		
+             x:Class="App.Controls.PopPup.SolicitudViajePopup"
+	BackgroundColor="Transparent">
+	<ScrollView VerticalOptions="FillAndExpand">
 		<Frame BackgroundColor="#FFF"
 			   CornerRadius="10"
 			   HeightRequest="220"
 			   VerticalOptions="CenterAndExpand"
 			   HorizontalOptions="CenterAndExpand">
-			
+
 			<StackLayout WidthRequest="250"
 				BackgroundColor="Transparent"
 				Orientation="Vertical">
@@ -23,7 +22,7 @@
 						   FontAttributes="Bold"/>
 
 					<StackLayout Orientation="Vertical">
-						
+
 						<Label x:Name="lblTitule"
 							Text="Estan solicitando tus servicios"
 						    FontSize="17"
@@ -32,7 +31,7 @@
 							Text="en la calle Miguel Hidal frente a la famacia even-ezer"
 						    FontSize="17"
 						    FontAttributes="None"/>
-						
+
 					</StackLayout>
 				</StackLayout>
 
@@ -42,35 +41,13 @@
 					<Image Source="si.png"
 						   BackgroundColor="Transparent"
 						   WidthRequest="100"/>
-					
+
 					<Image Source="no.png"
 				           WidthRequest="100"/>
 				</StackLayout>
-				
+
 			</StackLayout>
-			
+
 		</Frame>
-
-		<StackLayout BackgroundColor="#C7C7C7"
-					 VerticalOptions="FillAndExpand"
-					 IsVisible="False"
-				 Orientation="Vertical">
-
-			<ActivityIndicator IsRunning="True"
-							   Margin="0,50,0,0"
-						   Color="#323232"/>
-			<Image Source="salir.png"
-					HorizontalOptions="EndAndExpand"
-					Margin="1,120,-150,1"
-					BackgroundColor="Transparent"
-					WidthRequest="450"/>
-			<Image Source="modal_asignado_moto.png"
-				   Margin="0,-15,0,0"
-					   WidthRequest="250"/>
-		</StackLayout>
-		
-	</StackLayout>
-	
-	
-
-</ContentPage>
+	</ScrollView>
+</popup:PopupPage >

@@ -2,10 +2,10 @@
 {
     public class fcmBody
     {
-        public Notification notification { get; set; }
+        public Notification_ notification { get; set; }
         public string to { get; set; }
     }
-    public class Notification
+    public class Notification_
     {
         public string body { get; set; }
         public string title { get; set; }

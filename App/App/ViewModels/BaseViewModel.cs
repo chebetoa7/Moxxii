@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -65,7 +66,10 @@ namespace App.ViewModels
         public async Task IniciaRutaPopup()
         {
             //await MauiPopup.PopupAction.DisplayPopup(new StarRutePopup());
-            await PopupNavigation.Instance.PushAsync(new StarRutePopup());
+            
+                await PopupNavigation.Instance.PushAsync(new StarRutePopup());
+            
+            
         }
         public async Task TerminaRutaPopup()
         {
@@ -80,6 +84,18 @@ namespace App.ViewModels
             await PopupNavigation.Instance.PushAsync(new ShareMotoTaxxiiPopup());
         }
         public async Task ShareMotoStopPopup()
+        {
+            await PopupNavigation.Instance.PopAsync(true);
+        }
+        #endregion
+
+        #region SolicitudViaje
+        public async Task SolicitudStartPopup()
+        {
+            //await MauiPopup.PopupAction.DisplayPopup(new StarRutePopup());
+            await PopupNavigation.Instance.PushAsync(new SolicitudViajePopup());
+        }
+        public async Task SolicitudStopPopup()
         {
             await PopupNavigation.Instance.PopAsync(true);
         }

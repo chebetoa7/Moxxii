@@ -1,6 +1,7 @@
 ﻿using App.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -33,6 +34,9 @@ namespace App.ViewModels.Controls
                 if (startResponse)
                 {
                     await DisplayAlertMessage("Activo para viaje", "Ahora ya estas listo para recibir viajes, te pedimos que seas responsable cuando aceptes viaje", "OK");
+                    var confUp = DB.ConfigRepository.Instancia.GetConfigUser().FirstOrDefault();
+                    confUp.disponibility = "libre";
+                    DB.ConfigRepository.Instancia.updateConfig(confUp);
                     await TerminaRutaPopup();
                 }
                 else 

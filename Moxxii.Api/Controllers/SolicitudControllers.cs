@@ -245,16 +245,18 @@ namespace Moxxii.Api.Controllers
         }
         [HttpGet]
         [Route("/api/solicitud/escaneoSolicitudViaje")]
-        public async Task<dynamic> VerificarViaje(int idConductor)
+        public async Task<dynamic> VerificarViaje(int id)
         {
             try 
             {
                 var solicitudes = await _context.solicitudViajes. Where(
-                    w => w.IdConductor == idConductor && 
-                    ( 
-                        w.ConfirmationStatus != "Terminado" ||
-                        w.ConfirmationStatus != "Aceptado"
-                    ) &&
+                    
+                    w => w.IdConductor == id ||
+                    w.IdPasajero == id
+                    &&
+                    w.ConfirmationStatus != "Terminado" ||
+                    w.ConfirmationStatus != "Aceptado"
+                    &&
                     w.status == true
                     ).ToListAsync();
 
@@ -433,23 +435,34 @@ namespace Moxxii.Api.Controllers
 
             string titulo = data.titulo.ToString();
             string mensaje = data.mensaje.ToString();
+            string k1 = data.key_1.ToString();
+            string k2 = data.key_2.ToString();
+
             string tokenDivice = data.tokenDivice.ToString();
             string tokenFCM = data.tokenFirebase.ToString();
+            string collapse_key = data.collapse_key.ToString();
 
             try
             {
                 var apiManager = RestService.For<IMoxxiiApi>(MoxxiiApi.BasePushUrl);
 
 
-                var notification_ = new Moxxii.Api.Body.Notification
+                var data_ = new Moxxii.Api.Body.Data
                 {
-                    title = titulo,
-                    body = mensaje,
+                    
+                    key_1 = k1,
+                    key_2 = k2
                 };
-                var _body = new fcmBody
+                var notification = new Moxxii.Api.Body.Notification
+                {
+                    body = mensaje,
+                    title = titulo
+                };
+                var _body = new fcmBodyData
                 {
                     to = tokenDivice,
-                    notification = notification_
+                    notification = notification,
+                    data = data_,
                 };
 
 

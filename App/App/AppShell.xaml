@@ -6,9 +6,9 @@
 	    xmlns:views2="clr-namespace:App"
 	   Shell.FlyoutBehavior="Disabled">
 	<!--ContentTemplate="{DataTemplate views2:MainPage}"-->
+	<!--ContentTemplate="{DataTemplate views:LoginPrecentationPage}"-->
 	<ShellContent
         Title="Home"
-		
 		
 		ContentTemplate="{DataTemplate views:LoginPrecentationPage}"
         Route="MainPage" />

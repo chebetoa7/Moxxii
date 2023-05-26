@@ -35,6 +35,7 @@ namespace App.ViewModels.Mapas
 
         #region Command
         public ICommand ShearLocationCommand { get; set; }
+        public Pin Usuario { get; private set; }
         #endregion
 
         [Obsolete]
@@ -164,7 +165,7 @@ namespace App.ViewModels.Mapas
                 */
                 Xamarin.Forms.GoogleMaps.Position loc1 = new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude);
                 MapSpan mapSpan = new MapSpan(loc1, 0.01, 0.01);
-                Pin Usuario = new Pin()
+                Usuario = new Pin()
                 {
                     Label = "Ubicación actual",
                     Type = PinType.Place,
@@ -195,6 +196,7 @@ namespace App.ViewModels.Mapas
                 };
                 
                 var userfree = await GetSolicitudMotoAsync(solicitud);
+
                 
             }
             catch (Exception ex)
@@ -204,6 +206,7 @@ namespace App.ViewModels.Mapas
             }
             Device.BeginInvokeOnMainThread(async () => await LoadingFalse());
             Device.BeginInvokeOnMainThread(async () => await ShareMotoPopup());
+            _: SendSecondPush();
         }
         Helper.Login.loginHelper helperL;
         
@@ -221,7 +224,7 @@ namespace App.ViewModels.Mapas
 
                 var name_ = Preferences.Get("config_user_name", "");
                 var lastName_ = Preferences.Get("config_user_lastName", "");
-                var pushFirebase = SendPushFirebaseAsync("Nuevo viaje", "Tienes una solicitud de viaje de " + name_ + " " + lastName_, usuarioEncontrado.tokenfirebase, Services.MoxxiiApi.AutoritationFCM, access_token_Config);
+                var pushFirebase = await SendPushFirebaseAsync("Nuevo viaje", "Tienes una solicitud de viaje de " + name_ + " " + lastName_, usuarioEncontrado.tokenfirebase, Services.MoxxiiApi.AutoritationFCM, access_token_Config);
                 //usuarioValido = await helperL.ConductorLibre(cityBD.city.ToString(), "libre" , access_token_Config);
                 return true;
             }
@@ -241,8 +244,11 @@ namespace App.ViewModels.Mapas
                 {
                     titulo = titulo,
                     mensaje = mensaje,
+                    key_1 = "Solicitud",
+                    key_2 = "na",
                     tokenDivice = tokenDivice,
-                    tokenFirebase = tikenFirebase
+                    tokenFirebase = tikenFirebase,
+                    collapse_key = "type_a"
 
                 };
                 var viaje = await managerServices.SendPushFirebase(lodata, tokenAccess);
@@ -256,6 +262,48 @@ namespace App.ViewModels.Mapas
             return false;
         }
 
+        private async Task SendSecondPush() 
+        {
+            try 
+            {
+                await WaitAndExecute(1000, () =>
+                {
+                    _: SecondPush();
 
+                });
+            } catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async void SecondPush()
+        {
+            var access_token_Config = Preferences.Get("config_user_tokenApi", "");
+
+            var idPasajero_ = Preferences.Get("config_user_id", 0);
+            var city_ = Preferences.Get("config_user_city", "");
+            var distric_ = Preferences.Get("config_user_distric", "");
+
+            var solicitud = new NuevoViaje
+            {
+                idPasajero = idPasajero_,
+                idConductor = 0,//por asignar
+                latInitial = Usuario.Position.Latitude,
+                longInitial = Usuario.Position.Longitude,
+                city = city_,
+                dictric = distric_,
+                status = true,
+                confirmationStatus = "Asignado",
+                TypeUser = "tdm",
+                Disponibility = "libre"
+            };
+
+            var usuarioEncontrado = await managerServices.SolicitudViaje(solicitud, access_token_Config);
+
+            var name_ = Preferences.Get("config_user_name", "");
+            var lastName_ = Preferences.Get("config_user_lastName", "");
+            var pushFirebase = await SendPushFirebaseAsync("Solicitud nueva", "Tienes una solicitud de viaje de " + name_ + " " + lastName_, usuarioEncontrado.tokenfirebase, Services.MoxxiiApi.AutoritationFCM, access_token_Config);
+        }
     }
 }

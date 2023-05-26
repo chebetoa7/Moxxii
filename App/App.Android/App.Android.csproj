@@ -190,5 +190,29 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\usuariopasajero.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sininiciarmoto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\esperamoto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\finalizarmoto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\usuico.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\motoico.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\terminajornada.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\pedidomoto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\viajemoto.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

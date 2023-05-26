@@ -18,10 +18,10 @@ namespace App.Services
     {
         Helper.Login.loginHelper helperL;
 
-        public async Task<bool> StartDay(string disponibility, int id, string tokenAccess) 
+        public async Task<bool> StartDay(string disponibility, int id, string tokenAccess)
         {
             bool startDayResponse = false;
-            try 
+            try
             {
                 var apiManager = RestService.For<IMoxxiiApi>(
                     MoxxiiApi.BaseUrl,
@@ -31,21 +31,21 @@ namespace App.Services
                         Task.FromResult(tokenAccess)
                     });
 
-                
-                var response = await apiManager.StartDay(disponibility,id);
-                
+
+                var response = await apiManager.StartDay(disponibility, id);
+
                 if (response.sucess == true)
                 {
                     startDayResponse = response.sucess;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
             return startDayResponse;
         }
-        public async Task<Usuario> SolicitudViaje(NuevoViaje solicitud, string tokenAccess) 
+        public async Task<Usuario> SolicitudViaje(NuevoViaje solicitud, string tokenAccess)
         {
             ResponseToken res = null;
             Usuario usuarioEncontrado = null;
@@ -65,7 +65,7 @@ namespace App.Services
                         Task.FromResult(tokenAccess)
                     });
                 var user = await apiManager.GetShareFree(lodata);
-                
+
                 if (user != null)
                 {
                     usuarioEncontrado = user.result.usuario;
@@ -78,13 +78,34 @@ namespace App.Services
                     }
                 }
 
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return usuarioEncontrado;
+        } 
+        //Pasaje si es true no a aceptado enviar otro usuario o enviar otra push con otro mensaje
+        //Condcutor en caso no le caiga la push va tener que consultar si tiene viajes si es true
+        public async Task<bool> EscanTravel(int idConductor) 
+        {
+            try
+            {
+                var apiManager = RestService.For<IMoxxiiApi>(
+                    MoxxiiApi.BaseUrl);
+                var response = await apiManager.GetVerificarViaje(idConductor);
                 
+                if (response != null)
+                {
+                    return response.success;
+                }
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return usuarioEncontrado;
+            return false;
         }
         public async Task<bool> SendPushFirebase(FCMBody body, string tokenAccess) 
         {

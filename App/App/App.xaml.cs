@@ -7,11 +7,14 @@ namespace App
 {
     public partial class App : Application
     {
+        public static bool ActionPush_;
         [Obsolete]
-        public App(string configBD)
+        public App(string configBD, bool ActionPush)
         {
             InitializeComponent();
+            
             DB.ConfigRepository.Inicializador(configBD);
+            ActionPush_ = ActionPush;
 
             MainPage = new AppShell();
         }

@@ -7,6 +7,7 @@ using Android.OS;
 using AndroidX.Core.OS;
 using Android.Gms.Common;
 using Xamarin.Essentials;
+using System.Linq;
 
 namespace App.Droid
 {
@@ -28,8 +29,30 @@ namespace App.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
+
+            bool ActionPush = false;
+            if (Intent.Extras != null)
+            {
+                //ActionPush = true;
+                foreach (var key in Intent.Extras.KeySet())
+                {
+                    var value = Intent.Extras.GetString(key);
+                    if (key == "key_1")
+                    {
+                        if (value?.Length > 0)
+                        {
+                            if (value == "Solicitud")
+                            {
+                                ActionPush = true;
+                                LoadApplication(new App(dbPathConfig, ActionPush));
+                            }
+                        }
+                    }
+                }
+            }
+
             
-            LoadApplication(new App(dbPathConfig));
+            LoadApplication(new App(dbPathConfig, ActionPush));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

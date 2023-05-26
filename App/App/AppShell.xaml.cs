@@ -14,6 +14,7 @@ namespace App
         public AppShell()
         {
             InitializeComponent();
+            
         }
     }
 }

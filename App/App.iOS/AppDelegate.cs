@@ -28,7 +28,7 @@ namespace App.iOS
             Rg.Plugins.Popup.Popup.Init();
             Xamarin.FormsGoogleMaps.Init("AIzaSyC2XudfRAoNIVBkWWwi9Y20obpb00T6jU0");
             dbPathConfig = Services.FileAccess.GetLocalFilePath("configuser.db3");
-            LoadApplication(new App(dbPathConfig));
+            LoadApplication(new App(dbPathConfig, false));
 
             return base.FinishedLaunching(app, options);
         }

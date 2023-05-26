@@ -16,7 +16,7 @@ namespace Moxxii.Api.Services
         Task<RouteMaps> GetDistan(double originLat, double originLon,double deslat, double desLong, string key);
 
         [Post("/fcm/send")]
-        Task<FCMResponse> SendPush(fcmBody fcm, [Header("Authorization")] string authorization);
+        Task<FCMResponse> SendPush(fcmBodyData fcm, [Header("Authorization")] string authorization);
 
 
     }
